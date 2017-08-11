@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Welcome to the resume builder 4000</h1>
+
+    <form action="#"
+          th:action="@{/addeducation}"
+          th:object="${newPerson}"
+          method="post">
+        <ul>
+            Name: <Input type="text" th:field="*{name}"/>
+            <span th:if="${#fields.hasErrors('name')}"
+                  th:errors="*{name}"></span><br />
+            Email:<Input type="text" th:field="*{email}"/>
+            <span th:if="${#fields.hasErrors('email')}"
+                  th:errors="*{email}"></span><br />
+        </ul>
+    <input type:"
+
+
+
+    </form>
+
+    <h2><a href="/addeducation">Click here to start</a></h2>
+    
+</body>
+</html>
