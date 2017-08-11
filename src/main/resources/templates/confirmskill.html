@@ -7,8 +7,15 @@
 <body>
     <h1>Confirm the Work entry</h1>
 
+    <p th:inline="text">So [[${newPerson.name}]] here is what you just entered</p>
+
+    <p th:inline="text">Skill: [[${aSkill.skill}]].</p>
+    <p th:inline="text">Rating: [[${aSkill.rating}]].</p>
+
+
     <h2><a href="/addskill">Add another skill</a></h2>
-    <h2><a href="/generateresume">Go to add skillz</a></h2>
+    <br />
+    <h1><a href="/generateresume">Lets Generate your resume</a></h1>
 
 
 

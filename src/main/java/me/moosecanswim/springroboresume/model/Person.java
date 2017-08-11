@@ -1,13 +1,15 @@
 package me.moosecanswim.springroboresume.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
 @Entity
 public class Person {
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
     @NotNull

@@ -3,8 +3,10 @@ package me.moosecanswim.springroboresume.controller;
 import me.moosecanswim.springroboresume.model.Education;
 import me.moosecanswim.springroboresume.model.Job;
 import me.moosecanswim.springroboresume.model.Person;
+import me.moosecanswim.springroboresume.model.Skill;
 import me.moosecanswim.springroboresume.repositories.EducationRepository;
 import me.moosecanswim.springroboresume.repositories.JobRepository;
+import me.moosecanswim.springroboresume.repositories.PersonRepository;
 import me.moosecanswim.springroboresume.repositories.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class MainController {
-
+    @Autowired
+    PersonRepository personRepository;
     @Autowired
     EducationRepository educationRepository;
     @Autowired
@@ -45,16 +50,20 @@ public class MainController {
 
 
     @GetMapping("/addeducation")
-    public String addEducation(Model toSend,@ModelAttribute("newPerson") Person newPerson){
+    public String addEducation(Model toSend){
+
         toSend.addAttribute("anEducation", new Education());
+
         return "addeducation";
     }
 
     @PostMapping("/addeducation")
-    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation, @ModelAttribute("newPerson") Person newPerson, BindingResult result){
+    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
         if(result.hasErrors()){
             return "addeducation";
         }
+        educationRepository.save(anEducation);
+
         return "confirmeducation";
     }
 
@@ -79,7 +88,7 @@ public class MainController {
         if(result.hasErrors()){
             return "addwork";
         }
-
+        jobRepository.save(aJob);
         return "confirmwork";
     }
 
@@ -92,23 +101,35 @@ public class MainController {
      */
 
     @GetMapping("/addskill")
-    public String addskill(){
-
+    public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson){
+        toSend.addAttribute("aSkill", new Skill());
 
         return "addskill";
     }
     @PostMapping("/addskill")
-    public String confirmSkillAndAddMore(){
-
-        return "addskill";
+    public String confirmSkillAndAddMore(@Valid @ModelAttribute("aSkill") Skill aSkill, @ModelAttribute("newPerson") Person newPerson, BindingResult result){
+        if(result.hasErrors()) {
+            return "addskill";
+        }
+        skillRepository.save(aSkill);
+        return "confirmskill";
     }
 
     @GetMapping("/generateresume")
-    public String generateResume(){
+    public String generateResume(Model toSend, @ModelAttribute("newPerson") Person newPerson){
         //maybe have buttons to add more education, work, or skills
+
+        Iterable<Education> learnz = educationRepository.findAll();
+        Iterable<Job> workz = jobRepository.findAll();
+        Iterable<Skill> skillz = skillRepository.findAll();
+
+
 
         return "generateresume";
     }
+
+
+
 
 
 }

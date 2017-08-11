@@ -7,7 +7,24 @@
 <body>
     <h1>Enter your skill here</h1>
 
-    <h2><a href="/confirmskill">submit the skill and take me to a confirm page</a></h2>
+    <form action="#"
+          th:action="@{/addskill}"
+          th:object="${aSkill}"
+          method="post">
+        <ul>
+            Skill: <input th:type="text" th:field="*{skill}"/> <br />
+            <span th:if="${#fields.hasErrors('skill')}"
+                  th:errors="*{skill}"></span><br />
+            Rating: <input th:type="text" th:field="*{rating}"/><br />
+            <span th:if="${#fields.hasErrors('rating')}"
+                  th:errors="*{rating}"></span><br />
+
+        </ul>
+
+        <input type="submit" value="Add Skill"/> <input type="reset" value="Clear Form"/>
+
+    </form>
+
 
 
 
