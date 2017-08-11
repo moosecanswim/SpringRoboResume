@@ -7,6 +7,16 @@
 <body>
     <h1>Confirm the Work entry</h1>
 
+    <p th:inline="text">So [[${newPerson.name}]] here is what you just entered</p>
+
+    <p th:inline="text">Company: [[${aJob.company}]].</p>
+    <p th:inline="text">Position: [[${aJob.position}]].</p>
+    <p th:inline="text">Start Date: [[${aJob.startDate}]].</p>
+    <p th:inline="text">End Date: [[${aJob.endDate}]].</p>
+    <p th:inline="text">Duty 1: [[${aJob.duty1}]].</p>
+    <p th:inline="text">Duty 2: [[${aJob.duty2}]].</p>
+
+
     <h2><a href="/addwork">Add another job</a></h2>
     <h2><a href="/addskill">Go to add skillz</a></h2>
 </body>

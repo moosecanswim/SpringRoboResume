@@ -7,6 +7,33 @@
 <body>
     <h1>Add some edumacation</h1>
 
+    <p th:inline="text">
+        Alright [[${newPerson.name}]] time to add some educational details to your resume.
+    </p>
+
+    <form action="#"
+          th:action="@{/addeducation}"
+          th:object="${anEducation}"
+          method="post">
+        <ul>
+            School: <input th:type="text" th:field="*{school}"/> <br />
+            <span th:if="${#fields.hasErrors('school')}"
+                  th:errors="*{school}"></span><br />
+            Degree: <input th:type="text" th:field="*{degree}"/><br />
+            <span th:if="${#fields.hasErrors('degree')}"
+                  th:errors="*{degree}"></span><br />
+            Graduation Date: <input th:type="text" th:field="*{graduationDate}"/><br />
+            <span th:if="${#fields.hasErrors('graduationDate')}"
+                  th:errors="*{graduationDate}"></span><br />
+
+        </ul>
+
+        <input type="submit" value="Add Education"/> <input type="reset" value="Clear Form"/>
+
+    </form>
+
+
+
     <h2><a href="/confirmeducation">Cick here to simulate posing an add education</a></h2>
     
 </body>

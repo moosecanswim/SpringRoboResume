@@ -6,9 +6,15 @@
 </head>
 <body>
     <h1>Confirm the Education entry</h1>
+    <p th:inline="text">So [[${newPerson.name}]] here is what you just entered</p>
+
+    <p th:inline="text">School: [[${anEducation.school}]].</p>
+    <p th:inline="text">Degree: [[${anEducation.degree}]].</p>
+    <p th:inline="text">Graduated: [[${anEducation.graduationDate}]].</p>
+
 
     <h2><a href="/addeducation">Add another educational thing</a></h2>
-    <h2><a href="/addwork">Go to work history</a></h2>
+    <h2><a href="/addwork">Go add some work experience to your resume</a></h2>
     
 </body>
 </html>

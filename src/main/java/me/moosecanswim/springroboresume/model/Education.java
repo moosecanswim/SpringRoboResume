@@ -7,9 +7,9 @@ import javax.persistence.Id;
 public class Education  {
     @Id
     private long id;
-    private String degree;
     private String school;
-    private String graduatiouDate;
+    private String degree;
+    private String graduationDate;
 
     public String getDegree() {
         return degree;
@@ -27,15 +27,16 @@ public class Education  {
         this.school = school;
     }
 
-    public String getGraduatiouDate() {
-        return graduatiouDate;
-    }
-
-    public void setGraduatiouDate(String graduatiouDate) {
-        this.graduatiouDate = graduatiouDate;
-    }
 
     public long getId() {
         return id;
+    }
+
+    public String getGraduationDate() {
+        return graduationDate;
+    }
+
+    public void setGraduationDate(String graduationDate) {
+        this.graduationDate = graduationDate;
     }
 }

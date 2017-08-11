@@ -7,6 +7,37 @@
 <body>
     <h1>Enter your work info here</h1>
 
+        <form action="#"
+              th:action="@{/addwork}"
+              th:object="${aJob}"
+              method="post">
+            <ul>
+                Company: <input th:type="text" th:field="*{company}"/> <br />
+                <span th:if="${#fields.hasErrors('company')}"
+                      th:errors="*{company}"></span><br />
+                Position: <input th:type="text" th:field="*{position}"/><br />
+                <span th:if="${#fields.hasErrors('position')}"
+                      th:errors="*{position}"></span><br />
+                Start Date: <input th:type="text" th:field="*{startDate}"/><br />
+                <span th:if="${#fields.hasErrors('startDate')}"
+                      th:errors="*{startDate}"></span><br />
+                End Date: <input th:type="text" th:field="*{endDate}"/> <br />
+                <span th:if="${#fields.hasErrors('endDate')}"
+                      th:errors="*{endDate}"></span><br />
+                Duty 1: <input th:type="text" th:field="*{duty1}"/><br />
+                <span th:if="${#fields.hasErrors('duty1')}"
+                      th:errors="*{duty1}"></span><br />
+                Duty 2: <input th:type="text" th:field="*{duty2}"/><br />
+                <span th:if="${#fields.hasErrors('duty2')}"
+                      th:errors="*{duty2}"></span><br />
+
+            </ul>
+
+            <input type="submit" value="Add Job"/> <input type="reset" value="Clear Form"/>
+
+        </form>
+
+
     <h2><a href="/confirmwork">submit the work and take me to a confirm page</a></h2>
     
 </body>
