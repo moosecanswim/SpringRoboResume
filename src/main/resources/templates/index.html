@@ -8,9 +8,9 @@
     <h1>Welcome to the resume builder 4000</h1>
 
     <form action="#"
-          th:action="@{/addeducation}"
+          th:action="@{/}"
           th:object="${newPerson}"
-          method="get">
+          method="post">
         <ul>
             Name: <Input type="text" th:field="*{name}"/>
             <span th:if="${#fields.hasErrors('name')}"
@@ -25,7 +25,7 @@
 
     </form>
 
-    <h2><a href="/addeducation">Click here to start</a></h2>
+    <!--<h2><a href="/addeducation">Click here to start</a></h2>-->
     
 </body>
 </html>

@@ -39,6 +39,17 @@ public class MainController {
 
         return "index";
     }
+    @PostMapping("/")
+    public String index(@Valid @ModelAttribute("newPerson") Person newPerson,Model toSend,BindingResult result){
+        System.out.println(result.toString());
+        if(result.hasErrors()){
+            return"index";
+        }
+        personRepository.save(newPerson);
+        return"confirmperson";
+    }
+
+
 
     /**
      * click to add another education field then show confirmation page
@@ -119,10 +130,17 @@ public class MainController {
     public String generateResume(Model toSend, @ModelAttribute("newPerson") Person newPerson){
         //maybe have buttons to add more education, work, or skills
 
+        Person myPeep = personRepository.findById(1);
+        System.out.println("my friends name is " + myPeep.getName());
+
+        toSend.addAttribute("myPerson",myPeep);
+
+
+       /*
         Iterable<Education> learnz = educationRepository.findAll();
         Iterable<Job> workz = jobRepository.findAll();
         Iterable<Skill> skillz = skillRepository.findAll();
-
+        */
 
 
         return "generateresume";
