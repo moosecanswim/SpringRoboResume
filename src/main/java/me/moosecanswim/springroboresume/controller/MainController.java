@@ -136,11 +136,13 @@ public class MainController {
         toSend.addAttribute("myPerson",myPeep);
 
 
-       /*
+
         Iterable<Education> learnz = educationRepository.findAll();
+        toSend.addAttribute("myEducation", learnz);
         Iterable<Job> workz = jobRepository.findAll();
+        toSend.addAttribute("myWork", workz);
         Iterable<Skill> skillz = skillRepository.findAll();
-        */
+        toSend.addAttribute("mySkills",skillz);
 
 
         return "generateresume";

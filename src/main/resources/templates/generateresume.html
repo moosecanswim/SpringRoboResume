@@ -8,7 +8,39 @@
     <h1>Robo Resume 4000 is spitting this out</h1>
     <p th:inline="text" >Name: [[${myPerson.name}]]!</p>
 
-    <h2>Education</h2>
+
+
+    <!--
+    <table>
+        <tr th:each="i: ${myEducation}">
+            <td th:text="${i.school}"></td>
+        </tr>
+
+    </table>
+    -->
+    <h2>Education:</h2>
+    <br />
+    <div th:each="i:${myEducation}">
+        <p th:inline="text">School: [[${i.school}]] | Degree:[[${i.degree}]] | Graduated: [[${i.graduationDate}]] </p>
+    </div>
+
+    <hr></hr>
+    <h2>Work Experience:</h2>
+    <br />
+    <div th:each="i:${myWork}">
+        <p th:inline="text">Company: [[${i.company}]] | Position: [[${i.position}]]</p>
+        <p th:inline="text">Start Date: [[${i.startDate}]] | End Date: [[${i.endDate}]]</p>
+        <p th:inline="text">Duty 1: [[${i.duty1}]] | Duty 2: [[${i.duty2}]]</p>
+    </div>
+
+
+    <hr></hr>
+    <h2>Skills:</h2>
+    <br />
+    <div th:each="i:${mySkills}">
+        <p th:inline="text">Skill: [[${i.skill}]] | Rating: [[${i.rating}]]</p>
+
+    </div>
 
 
 
