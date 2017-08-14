@@ -4,8 +4,6 @@
     <meta charset="UTF-8"/>
     <title>Confirm the person made</title>
 
-    <!--My CSS-->
-    <link href="additionalcss.css" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +19,8 @@
     <!-- Custom styles for this template -->
     <link href="css/creative.min.css" rel="stylesheet">
 
+    <!--My CSS-->
+    <link href="css/additionalcss.css" rel="stylesheet">
 
 
     <!-- Temporary navbar container fix -->
@@ -67,12 +67,28 @@
                 <hr>
 
                 <!--enter things here-->
-                <div class="confirmperson">
-                <br />
-                <p th:inline="text">Name: [[${newPerson.name}]].</p>
-                <p th:inline="text">Email: [[${newPerson.email}]].</p>
-                <br />
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Confirmation:</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p th:inline="text">Name: [[${newPerson.name}]].</p>
+                        <p th:inline="text">Email: [[${newPerson.email}]].</p>
+                    </div>
                 </div>
+
+                <!--trying to make a div that has a background so it highlights the confirmation-->
+                <div class="wrapper">
+                    <div class="content">
+                        <p th:inline="text">Name: [[${newPerson.name}]].</p>
+                        <p th:inline="text">Email: [[${newPerson.email}]].</p>
+                    </div>
+                    <div class="background">
+                        <p></p>
+                    </div>
+                </div>
+
 
                 <a class="btn btn-primary btn-xl" href="/addeducation">Yup thats me!</a>
                 <a class="btn btn-primary btn-xl" href="/generateresume">Generate an empty resume</a>

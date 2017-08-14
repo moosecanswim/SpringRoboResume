@@ -173,7 +173,15 @@ header.masthead {
       font-size: 16px;
       font-weight: 300;
       margin-bottom: 50px;
-      color: rgba(255, 255, 255, 0.7); }
+      color: rgba(255, 255, 255, 0.7);}
+      header.masthead .header-content .header-content-inner .background{
+        color: #e2d39e;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -100;
+      }
+
   @media (min-width: 768px) {
     header.masthead {
       height: 100%;
