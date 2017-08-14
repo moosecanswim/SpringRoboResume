@@ -5,12 +5,14 @@
     <title>Confirm the person made</title>
 </head>
 <body>
+    <h1 th:inline="text">Just checking if this really is you [[${newPerson.name}]]:</h1>
+    <br />
     <p th:inline="text">Name: [[${newPerson.name}]].</p>
     <p th:inline="text">Email: [[${newPerson.email}]].</p>
+    <br />
 
 
-
-    <h2><a href="/addeducation">Time to add some educational experiences</a></h2>
-    <h2><a href="/generateresume"> Generate an empty resume</a></h2>
+    <h2><a href="/addeducation">Yup thats me!</a></h2>
+    <h6><a href="/generateresume"> Generate an empty resume (shortcut for development)</a></h6>
 </body>
 </html>

@@ -4,13 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Education  {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @NotNull
     private long id;
+    @NotNull
     private String school;
+    @NotNull
     private String degree;
     private String graduationDate;
 
@@ -40,6 +44,11 @@ public class Education  {
     }
 
     public void setGraduationDate(String graduationDate) {
-        this.graduationDate = graduationDate;
+       //says they are currently enrolled if there is no graduation date entered
+        if(graduationDate.isEmpty()){
+           this.graduationDate = "Currently Enrolled";
+       }else {
+           this.graduationDate = graduationDate;
+       }
     }
 }

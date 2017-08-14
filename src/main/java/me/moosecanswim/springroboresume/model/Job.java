@@ -4,14 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Entity
 public class Job {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
+    @NotNull
     private String company;
     private String position;
+    @NotNull
     private String startDate;
     private String endDate;
     private String duty1;
@@ -46,7 +52,14 @@ public class Job {
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = endDate;
+        //this adds present in for jobs that they have not left
+        if(endDate.isEmpty()){
+            this.endDate="present";
+        }
+        else {
+            this.endDate = endDate;
+        }
+
     }
 
     public String getDuty1() {
