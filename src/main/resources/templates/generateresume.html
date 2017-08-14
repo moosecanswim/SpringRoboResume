@@ -9,11 +9,13 @@
     <h3 th:inline="text">[[${myPerson.name}]]!</h3>
     <h4 th:inline="text">[[${myPerson.name}]]</h4>
 
+
     <h2>Education:</h2>
     <div th:each="i:${myEducation}">
         <p th:inline="text"><strong>[[${i.degree}]]</strong>, </p>
         <p th:inline="text">[[${i.school}]], [[${i.graduationDate}]] </p>
     </div>
+    <p><a href="/addeducation">Add another educational experience</a></p>
 
     <hr></hr>
     <br />
@@ -24,6 +26,7 @@
         <p th:inline="text"> -Duty 1: [[${i.duty1}]]</p>
         <p th:inline="text"> -Duty 2: [[${i.duty2}]]</p>
     </div>
+    <p><a href="/addwork">Add another job</a></p>
 
 
     <hr></hr>
@@ -32,6 +35,7 @@
     <div th:each="i:${mySkills}">
         <p th:inline="text">Skill: [[${i.skill}]]; [[${i.rating}]]</p>
     </div>
+    <p><a href="/addskill">Add more skills</a></p>
 
 
 
