@@ -46,10 +46,8 @@ public class MainController {
             return"index";
         }
         personRepository.save(newPerson);
-        return"confirmperson";
+        return"startresume";
     }
-
-
 
     /**
      * click to add another education field then show confirmation page
@@ -103,13 +101,6 @@ public class MainController {
         return "confirmwork";
     }
 
-    /***have fields that will accept a single skill
-     * click to add another skill (this will show a confirmation of the previous
-     * entry and have fields avalible to enter a new skill
-     * buttons: add another skill and next(generate resume)
-     *
-     * 0-10 work experiences
-     */
 
     @GetMapping("/addskill")
     public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson){

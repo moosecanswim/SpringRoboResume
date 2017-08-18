@@ -7,8 +7,11 @@
 <body>
 
 <div th:fragment="header">
+    <meta charset="utf-8"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="moosecanswim">
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
@@ -39,33 +42,18 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <!--Home-->
-                    <li><a href="/">Home</a></li>
-                    <!--link 2-->
-                    <li><a href="/add">Add Listing</a></li>
-                    <!--test page-->
-                    <li ><a href="/test">Test</a></li>
-                    <!--dropdown-->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Show<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/showListings">All</a></li>
-                            <li><a href="/showAvalibleListings">Avalible</a></li>
-                            <li><a href="/showUnavalible">Unavalible</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
+                    <!--Start Over-->
+                    <li><a href="/">Start Over</a></li>
+                    <!--Add Generate Resume-->
+                    <li ><a href="/generateresume"> Generate Resume</a></li>
+                    <!--text for add-->
+                    <li><p class="navbar-text">Add: </p></li>
+                    <!--Add Education-->
+                    <li><a href="/addeducation">Education</a></li>
+                    <!--Add Work-->
+                    <li ><a href="/addwork">Work</a></li>
+                    <!--Add Skills-->
+                    <li ><a href="/addskill">Skills</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

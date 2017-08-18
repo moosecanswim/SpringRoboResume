@@ -1,45 +1,64 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
-    <meta charset="UTF-8"/>
     <title th:inline="text"> [[${myPerson.name}]]'s New Resume</title>
+    <th:block th:replace="base::header"></th:block>
 </head>
 <body>
-    <h1>Robo Resume 4000 presents</h1>
-    <h3 th:inline="text">[[${myPerson.name}]]!</h3>
-    <h4 th:inline="text">[[${myPerson.name}]]</h4>
+    <th:block th:replace="base::navigation"></th:block>
+
+    <div class="container">
+
+        <h1>Robo Resume 4000 presents</h1>
+        <h3 th:inline="text">[[${myPerson.name}]]!</h3>
+        <h4 th:inline="text">[[${myPerson.name}]]</h4>
 
 
-    <h2>Education:</h2>
-    <div th:each="i:${myEducation}">
-        <p th:inline="text"><strong>[[${i.degree}]]</strong>, </p>
-        <p th:inline="text">[[${i.school}]], [[${i.graduationDate}]] </p>
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                     <h3>Education:</h3>
+                </div>
+                <div th:each="i:${myEducation}" class="panel-body">
+                    <p th:inline="text"><strong>[[${i.degree}]]</strong>, </p>
+                    <p th:inline="text">[[${i.school}]], [[${i.graduationDate}]] </p>
+                </div>
+            </div>
+            <p><a href="/addeducation">Add another educational experience</a></p>
+        </div>
+
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Work Experience:</h3>
+                </div>
+                <div th:each="i:${myWork}" class="panel-body">
+                    <p th:inline="text"><strong>[[${i.position}]]</strong> </p>
+                    <p th:inline="text">[[${i.company}]], [[${i.startDate}]] - [[${i.endDate}]]</p>
+                    <p th:inline="text"> -Duty 1: [[${i.duty1}]]</p>
+                    <p th:inline="text"> -Duty 2: [[${i.duty2}]]</p>
+                </div>
+            </div>
+            <p><a href="/addwork">Add another work experience</a></p>
+        </div>
+
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Skills:</h3>
+                </div>
+                <div th:each="i:${mySkills}" class="panel-body">
+                    <p th:inline="text">Skill: [[${i.skill}]]; [[${i.rating}]]</p>
+                </div>
+            </div>
+            <p><a href="/addskills">Add more skills</a></p>
+        </div>
+
+
+
+        <h2><a href="/">Start over</a></h2>
     </div>
-    <p><a href="/addeducation">Add another educational experience</a></p>
 
-    <hr></hr>
-    <br />
-    <h2>Work Experience:</h2>
-    <div th:each="i:${myWork}">
-        <p th:inline="text"><strong>[[${i.position}]]</strong> </p>
-        <p th:inline="text">[[${i.company}]], [[${i.startDate}]] - [[${i.endDate}]]</p>
-        <p th:inline="text"> -Duty 1: [[${i.duty1}]]</p>
-        <p th:inline="text"> -Duty 2: [[${i.duty2}]]</p>
-    </div>
-    <p><a href="/addwork">Add another job</a></p>
-
-
-    <hr></hr>
-    <br />
-    <h2>Skills:</h2>
-    <div th:each="i:${mySkills}">
-        <p th:inline="text">Skill: [[${i.skill}]]; [[${i.rating}]]</p>
-    </div>
-    <p><a href="/addskill">Add more skills</a></p>
-
-
-
-    <h2><a href="/">Start over</a></h2>
-
+    <th:block th:replace="base::footer"></th:block>
 </body>
 </html>
