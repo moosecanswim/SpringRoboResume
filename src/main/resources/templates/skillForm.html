@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+
+    <title>Resume Builder 4000</title>
+    <th:block th:replace="base::header"></th:block>
+</head>
+
+<body id="page-top">
+    <th:block th:replace="base::navigation"></th:block>
+    <!--enter things here-->
+    <div class="container" boarder="1px">
+        <form class="well form-horizontal"
+                action="#"
+              th:action="@{/addskill}"
+              th:object="${aSkill}"
+              method="post">
+            <fieldset>
+                <legend>Skill Form</legend>
+                <!--hidden-->
+                <input type="hidden" th:field="*{id}">
+
+                <!--skill-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Skill</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input th:type="text" th:field="*{skill}"/> <br />
+                            <span th:if="${#fields.hasErrors('skill')}"
+                                  th:errors="*{skill}"></span><br />
+                        </div>
+                    </div>
+                </div>
+                <!--Rating-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Rating</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <input th:type="text" th:field="*{rating}"/><br />
+                            <span th:if="${#fields.hasErrors('rating')}"
+                                  th:errors="*{rating}"></span><br />
+                        </div>
+                    </div>
+                </div>
+
+                <!--Submit and clear buttons-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-4">
+                        <button id="submitButton" type="submit" class="btn btn-primary">Save <span class="glyphicon glyphicon-thumbs-up"></span></button>
+                        <button id="resetButton" type="reset" class="btn btn-primary">Clear <span class="glyphicon glyphicon-thumbs-down"></span></button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+
+    <th:block th:replace="base::footer"></th:block>
+</body>
+
+</html>

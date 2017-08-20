@@ -9,23 +9,25 @@
 </head>
 
 <body id="page-top">
-    <th:block th:replace="base::navigation"></th:block>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Confirmation:</h3>
-    </div>
-    <div class="panel-body">
-        <p th:inline="text">School: [[${anEducation.school}]].</p>
-        <p th:inline="text">Degree: [[${anEducation.degree}]].</p>
-        <p th:inline="text">Graduated: [[${anEducation.graduationDate}]].</p>
+        <th:block th:replace="base::navigation"></th:block>
 
-    </div>
-</div>
-<a href="/addeducation">Add another educational thing!</a>
-<a href="/addwork">Add work experience!</a>
+      <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Confirmation:</h3>
+                </div>
+                <div class="panel-body">
+                    <p th:inline="text">School: [[${anEducation.school}]].</p>
+                    <p th:inline="text">Degree: [[${anEducation.degree}]].</p>
+                    <p th:inline="text">Graduated: [[${anEducation.graduationDate}]].</p>
 
+                </div>
+            </div>
+        <a href="/addeducation">Add another educational thing!</a>
+        <a href="/addwork">Add work experience!</a>
+      </div>
 
-<th:block th:replace="base::footer"></th:block>
+        <th:block th:replace="base::footer"></th:block>
 </body>
 
 </html>

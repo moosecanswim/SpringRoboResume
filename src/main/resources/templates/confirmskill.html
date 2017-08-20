@@ -9,25 +9,20 @@
 
 <body id="page-top">
     <th:block th:replace="base::navigation"></th:block>
-
-<!--enter things here-->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Confirmation:</h3>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Confirmation:</h3>
+            </div>
+            <div class="panel-body">
+                <p th:inline="text">Skill: [[${aSkill.skill}]].</p>
+                <p th:inline="text">Rating: [[${aSkill.rating}]].</p>
+            </div>
+        </div>
+        <h2><a href="/addskill">Add another skill</a></h2>
+        <br />
+        <h1><a href="/generateresume">Lets Generate your resume</a></h1>
     </div>
-    <div class="panel-body">
-        <p th:inline="text">Skill: [[${aSkill.skill}]].</p>
-        <p th:inline="text">Rating: [[${aSkill.rating}]].</p>
-
-
-
-
-    </div>
-</div>
-<h2><a href="/addskill">Add another skill</a></h2>
-<br />
-<h1><a href="/generateresume">Lets Generate your resume</a></h1>
-
 
 <th:block th:replace="base::footer"></th:block>
 </body>

@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -63,42 +61,35 @@ public class MainController {
 
         toSend.addAttribute("anEducation", new Education());
 
-        return "addeducation";
+        return "educationForm";
     }
 
     @PostMapping("/addeducation")
     public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
         if(result.hasErrors()){
-            return "addeducation";
+            return "educationForm";
         }
         educationRepository.save(anEducation);
 
-        return "confirmeducation";
+//        return "confirmeducation";
+        return "redirect:/addwork";
     }
 
-
-
-    /***have fields that will accept a single job
-     * click to add another work experience (this will show a confirmation of the previous
-     * entry and have fields avalible to enter a new job
-     * buttons: add another and next(to skills)
-     *
-     * 0-10 work experiences
-     */
 
     @GetMapping("/addwork")
     public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson){
 
         toSend.addAttribute("aJob", new Job());
-        return "addwork";
+        return "workForm";
     }
     @PostMapping("/addwork")
     public String confirmWorkAndAddMore(@Valid @ModelAttribute("aJob") Job aJob, @ModelAttribute("newPerson") Person newPerson, BindingResult result){
         if(result.hasErrors()){
-            return "addwork";
+            return "workForm";
         }
         jobRepository.save(aJob);
-        return "confirmwork";
+//        return "confirmwork";
+        return "redirect:/addskill";
     }
 
 
@@ -106,15 +97,16 @@ public class MainController {
     public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson){
         toSend.addAttribute("aSkill", new Skill());
 
-        return "addskill";
+        return "skillForm";
     }
     @PostMapping("/addskill")
     public String confirmSkillAndAddMore(@Valid @ModelAttribute("aSkill") Skill aSkill, @ModelAttribute("newPerson") Person newPerson, BindingResult result){
         if(result.hasErrors()) {
-            return "addskill";
+            return "skillForm";
         }
         skillRepository.save(aSkill);
-        return "confirmskill";
+//        return "confirmskill";
+        return "redirect:/generateresume";
     }
 
     @GetMapping("/generateresume")
@@ -139,7 +131,43 @@ public class MainController {
         return "generateresume";
     }
 
+    @RequestMapping("/update/{type}/{id}")
+    public String update(@PathVariable("type") String type, @PathVariable("id") long id, Model toSend){
+        String output=null;
+        toSend.addAttribute("anEducation" ,educationRepository.findOne(id));
+        toSend.addAttribute("aJob",jobRepository.findOne(id));
+        toSend.addAttribute("aSkill",skillRepository.findOne(id));
 
+        switch(type){
+            case "education":
+                output= "educationForm";
+                break;
+
+            case "work":
+                output= "workForm";
+                break;
+            case "skill":
+                output= "skillForm";
+                break;
+        }
+        return output;
+    }
+
+    @RequestMapping("/delete/{type}/{id}")
+    public String delete(@PathVariable("type") String type,@PathVariable("id") long id){
+        switch(type){
+            case "education":
+                educationRepository.delete(id);
+            break;
+            case "work":
+                jobRepository.delete(id);
+            break;
+            case "skill":
+                skillRepository.delete(id);
+            break;
+        }
+        return "redirect:/generateresume";
+    }
 
 
 

@@ -51,4 +51,8 @@ public class Education  {
            this.graduationDate = graduationDate;
        }
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
