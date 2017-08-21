@@ -29,6 +29,7 @@ public class MainController {
     @Autowired
     SkillRepository skillRepository;
 
+  //Add Person
     @GetMapping("/")
     public String index(Model toSend){
     //welcome to the roboresume 3000.  please enter a name and email to continue
@@ -47,19 +48,16 @@ public class MainController {
         return"startresume";
     }
 
-    /**
-     * click to add another education field then show confirmation page
-     * display confirmation entry and allow user to enter a new job
-     * buttons:add another education and next(to work experience)
-     *
-     * 1-10 educational experiences
-     */
 
-
+//Education
     @GetMapping("/addeducation")
     public String addEducation(Model toSend){
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("anEducation", new Education());
+
+        if(educationRepository.count()>0){
+            toSend.addAttribute("educationCount",(educationRepository.count()+1));
+        }
 
         return "educationForm";
     }
@@ -72,15 +70,18 @@ public class MainController {
         }
         educationRepository.save(anEducation);
 
-//        return "confirmeducation";
         return "redirect:/addwork";
     }
 
-
+//Work
     @GetMapping("/addwork")
     public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson){
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("aJob", new Job());
+        if(jobRepository.count()>0){
+            toSend.addAttribute("jobCount",(jobRepository.count()+1));
+        }
+
         return "workForm";
     }
     @PostMapping("/addwork")
@@ -90,15 +91,19 @@ public class MainController {
             return "workForm";
         }
         jobRepository.save(aJob);
-//        return "confirmwork";
         return "redirect:/addskill";
     }
 
-
+//Skills
     @GetMapping("/addskill")
     public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson){
+
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("aSkill", new Skill());
+
+        if(skillRepository.count()>0){
+            toSend.addAttribute("skillCount", (skillRepository.count()+1));
+        }
 
         return "skillForm";
     }
@@ -109,13 +114,13 @@ public class MainController {
             return "skillForm";
         }
         skillRepository.save(aSkill);
-//        return "confirmskill";
+
         return "redirect:/generateresume";
     }
 
+    //Generate Resume
     @GetMapping("/generateresume")
     public String generateResume(Model toSend, @ModelAttribute("newPerson") Person newPerson){
-        //maybe have buttons to add more education, work, or skills
 
         Person myPeep = personRepository.findById(1);
         System.out.println("my friends name is " + myPeep.getFirstName());
@@ -135,6 +140,8 @@ public class MainController {
         return "generateresume";
     }
 
+
+//Additional Services (update and delete)
     @RequestMapping("/update/{type}/{id}")
     public String update(@PathVariable("type") String type, @PathVariable("id") long id, Model toSend){
         String output=null;

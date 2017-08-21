@@ -19,6 +19,10 @@
                 <fieldset>
                     <Legend th:text="${isNew}? 'Add Employment History':'Update Employment Information'">Work</Legend>
 
+                    <div th:if="${isNew}">
+                        <p><strong th:text="${jobCount}"></strong>/10</p>
+                    </div>
+
                     <!--hidden-->
                     <input type="hidden" th:field="*{id}">
 
