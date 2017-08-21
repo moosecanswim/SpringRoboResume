@@ -23,14 +23,25 @@
             <!--Hidden id field-->
             <input type="hidden" th:field="*{id} ">
 
-            <!--name-->
+            <!--first name-->
             <div class="form-group">
-                <label class="col-md-4 control-label">Name</label>
+                <label class="col-md-4 control-label">First Name</label>
                 <div class="col-md-4 inputGroupContainer">
                     <div class="input-group">
-                        <Input type="text" th:field="*{name}"/>
-                        <span th:if="${#fields.hasErrors('name')}"
-                              th:errors="*{name}"></span><br />
+                        <Input type="text" th:field="*{firstName}"/>
+                        <span th:if="${#fields.hasErrors('firstName')}"
+                              th:errors="*{firstName}"></span><br />
+                    </div>
+                </div>
+            </div>
+            <!--last name-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Last Name</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <Input type="text" th:field="*{lastName}"/>
+                        <span th:if="${#fields.hasErrors('lastName')}"
+                              th:errors="*{lastName}"></span><br />
                     </div>
                 </div>
             </div>

@@ -18,7 +18,7 @@
               th:object="${aSkill}"
               method="post">
             <fieldset>
-                <legend>Skill Form</legend>
+                <legend th:text="${isNew}? 'Add Skill' : 'Update Skill'">Skill Form</legend>
                 <!--hidden-->
                 <input type="hidden" th:field="*{id}">
 

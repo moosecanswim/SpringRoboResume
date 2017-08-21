@@ -58,7 +58,7 @@ public class MainController {
 
     @GetMapping("/addeducation")
     public String addEducation(Model toSend){
-
+        toSend.addAttribute("isNew",true);
         toSend.addAttribute("anEducation", new Education());
 
         return "educationForm";
@@ -66,6 +66,7 @@ public class MainController {
 
     @PostMapping("/addeducation")
     public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+        toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "educationForm";
         }
@@ -78,12 +79,13 @@ public class MainController {
 
     @GetMapping("/addwork")
     public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson){
-
+        toSend.addAttribute("isNew",true);
         toSend.addAttribute("aJob", new Job());
         return "workForm";
     }
     @PostMapping("/addwork")
-    public String confirmWorkAndAddMore(@Valid @ModelAttribute("aJob") Job aJob, @ModelAttribute("newPerson") Person newPerson, BindingResult result){
+    public String confirmWorkAndAddMore(@Valid @ModelAttribute("aJob") Job aJob, @ModelAttribute("newPerson") Person newPerson, BindingResult result,Model toSend){
+        toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "workForm";
         }
@@ -95,12 +97,14 @@ public class MainController {
 
     @GetMapping("/addskill")
     public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson){
+        toSend.addAttribute("isNew",true);
         toSend.addAttribute("aSkill", new Skill());
 
         return "skillForm";
     }
     @PostMapping("/addskill")
-    public String confirmSkillAndAddMore(@Valid @ModelAttribute("aSkill") Skill aSkill, @ModelAttribute("newPerson") Person newPerson, BindingResult result){
+    public String confirmSkillAndAddMore(@Valid @ModelAttribute("aSkill") Skill aSkill, @ModelAttribute("newPerson") Person newPerson, BindingResult result, Model toSend){
+        toSend.addAttribute("isNew",false);
         if(result.hasErrors()) {
             return "skillForm";
         }
@@ -114,7 +118,7 @@ public class MainController {
         //maybe have buttons to add more education, work, or skills
 
         Person myPeep = personRepository.findById(1);
-        System.out.println("my friends name is " + myPeep.getName());
+        System.out.println("my friends name is " + myPeep.getFirstName());
 
         toSend.addAttribute("myPerson",myPeep);
 
@@ -137,6 +141,8 @@ public class MainController {
         toSend.addAttribute("anEducation" ,educationRepository.findOne(id));
         toSend.addAttribute("aJob",jobRepository.findOne(id));
         toSend.addAttribute("aSkill",skillRepository.findOne(id));
+
+        toSend.addAttribute("isNew",false);
 
         switch(type){
             case "education":

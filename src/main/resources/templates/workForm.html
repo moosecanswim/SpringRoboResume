@@ -17,7 +17,7 @@
                    th:object="${aJob}"
                    method="post">
                 <fieldset>
-                    <Legend>Work</Legend>
+                    <Legend th:text="${isNew}? 'Add Employment History':'Update Employment Information'">Work</Legend>
 
                     <!--hidden-->
                     <input type="hidden" th:field="*{id}">

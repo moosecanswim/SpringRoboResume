@@ -19,7 +19,7 @@
               th:object="${anEducation}"
               method="post">
             <fieldset>
-                <legend>Education Form</legend>
+                <legend th:text="${isNew}? 'Add Educational Experience' : 'Update Educational Experience'"></legend>
 
                 <!--hidden id field-->
                 <input type="hidden" th:field="*{id}">

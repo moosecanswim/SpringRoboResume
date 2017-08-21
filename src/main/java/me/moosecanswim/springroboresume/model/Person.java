@@ -1,5 +1,7 @@
 package me.moosecanswim.springroboresume.model;
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,9 +14,15 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
+
+
+
     @NotNull
-    private String name;
+    private String firstName;
     @NotNull
+    private String lastName;
+    @NotNull
+    @Email
     private String email;
 
     private ArrayList<Job> jobs;
@@ -22,14 +30,14 @@ public class Person {
     private ArrayList<Skill> skills;
 
 
-    public String getName() {
-        return name;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-
     public String getEmail() {
         return email;
     }
@@ -68,5 +76,13 @@ public class Person {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

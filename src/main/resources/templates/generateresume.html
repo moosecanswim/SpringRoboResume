@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
-    <title th:inline="text"> [[${myPerson.name}]]'s New Resume</title>
+    <title th:inline="text"> [[${myPerson.firstName}]]'s New Resume</title>
     <th:block th:replace="base::header"></th:block>
 </head>
 <body>
@@ -10,15 +10,14 @@
     <div class="container">
 
         <h1>Robo Resume 4000 presents</h1>
-        <h3 th:inline="text">[[${myPerson.name}]]!</h3>
-        <h4 th:inline="text">[[${myPerson.name}]]</h4>
+        <h3 th:inline="text">[[${myPerson.firstName}]] [[${myPerson.lastName}]]</h3>
+
 
         <!--education-->
         <div class="container">
             <div class="panel panel-default">
                 <div class="panel-heading">
                      <h3>Education:</h3>
-                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
                 </div>
                 <div th:each="i:${myEducation}" class="panel-body">
                     <p th:inline="text"><stron  g>[[${i.degree}]]</strong>, </p>
