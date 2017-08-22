@@ -55,4 +55,16 @@ public class Education  {
     public void setId(long id) {
         this.id = id;
     }
+
+    public boolean acceptEducation(){
+        boolean output = true;
+        if(getSchool().isEmpty()){
+            output=false;
+        }
+        if(getDegree().isEmpty()){
+            output=false;
+        }
+        return output;
+    }
+
 }

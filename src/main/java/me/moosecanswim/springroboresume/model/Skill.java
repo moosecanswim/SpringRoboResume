@@ -1,5 +1,7 @@
 package me.moosecanswim.springroboresume.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,9 +14,8 @@ public class Skill {
     @Id
     @NotNull
     private long id;
-    @NotNull
+    @NotBlank
     private String skill;
-    @NotNull
     private String rating;
 
     public String getSkill() {
@@ -40,4 +41,16 @@ public class Skill {
     public void setId(long id) {
         this.id = id;
     }
+
+    public boolean acceptSkill(){
+        boolean output=true;
+        if(getSkill().isEmpty()){
+            output=false;
+        }
+        //add any more constraints here
+
+        return output;
+
+    }
+
 }

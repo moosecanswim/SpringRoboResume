@@ -19,8 +19,16 @@
                 <div class="panel-heading">
                      <h3>Education:</h3>
                 </div>
+                <!--entry for if there are no enteries/ does not meet minimun required-->
+                <div th:style="${educationNeedsWork}? 'visability:visable':'visability:hidden' ">
+                    <a  href="/addeducation">Add Some Education 2</a>
+                    <p>stuff stuff stuff</p>
+                </div>
+
+
+
                 <div th:each="i:${myEducation}" class="panel-body">
-                    <p th:inline="text"><stron  g>[[${i.degree}]]</strong>, </p>
+                    <p th:inline="text"><strong>[[${i.degree}]]</strong>, </p>
                     <p th:inline="text">[[${i.school}]], [[${i.graduationDate}]] </p>
                     <p><a th:href="@{/update/education/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/education/{id}  (id=${i.id})}">Delete</a></p>
 

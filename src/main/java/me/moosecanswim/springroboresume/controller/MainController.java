@@ -40,7 +40,6 @@ public class MainController {
     }
     @PostMapping("/")
     public String index(@Valid @ModelAttribute("newPerson") Person newPerson,Model toSend,BindingResult result){
-        System.out.println(result.toString());
         if(result.hasErrors()){
             return"index";
         }
@@ -55,9 +54,13 @@ public class MainController {
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("anEducation", new Education());
 
-        if(educationRepository.count()>0){
-            toSend.addAttribute("educationCount",(educationRepository.count()+1));
+        toSend.addAttribute("educationCount",(educationRepository.count()+1));
+
+        Boolean outOfBounds=false;
+        if(educationRepository.count()>10){
+            outOfBounds=true;
         }
+        toSend.addAttribute("outOfBounds",outOfBounds);
 
         return "educationForm";
     }
@@ -65,7 +68,14 @@ public class MainController {
     @PostMapping("/addeducation")
     public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
         toSend.addAttribute("isNew",false);
+        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
+        //forces user to enter atleast one education (wont take a blank entry)
+        if(!anEducation.acceptEducation()){
+            return "redirect:/addeducation";
+        }
+
         if(result.hasErrors()){
+
             return "educationForm";
         }
         educationRepository.save(anEducation);
@@ -73,13 +83,31 @@ public class MainController {
         return "redirect:/addwork";
     }
 
+    //Add another education does not work
+    @PostMapping("/addanothereducation")
+    public String addAnother(@Valid @ModelAttribute("anEducation") Education anEducation, Model toSend, BindingResult result){
+        toSend.addAttribute("isNew",false);
+
+        if(result.hasErrors()){
+            return "educationForm";
+        }
+        educationRepository.save(anEducation);
+
+        return "redirect:/addeducation";
+
+    }
+
+
 //Work
     @GetMapping("/addwork")
     public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson){
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("aJob", new Job());
-        if(jobRepository.count()>0){
-            toSend.addAttribute("jobCount",(jobRepository.count()+1));
+        toSend.addAttribute("jobCount",(jobRepository.count()+1));
+
+        Boolean outOfBounds=null;
+        if(jobRepository.count()>10){
+            outOfBounds=true;
         }
 
         return "workForm";
@@ -101,15 +129,23 @@ public class MainController {
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("aSkill", new Skill());
 
-        if(skillRepository.count()>0){
-            toSend.addAttribute("skillCount", (skillRepository.count()+1));
+        toSend.addAttribute("skillCount", (skillRepository.count()+1));
+        Boolean outOfBounds=null;
+        if(skillRepository.count()>20){
+            outOfBounds=true;
         }
-
         return "skillForm";
     }
     @PostMapping("/addskill")
     public String confirmSkillAndAddMore(@Valid @ModelAttribute("aSkill") Skill aSkill, @ModelAttribute("newPerson") Person newPerson, BindingResult result, Model toSend){
         toSend.addAttribute("isNew",false);
+
+        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
+        //forces user to enter atleast one education (wont take a blank entry)
+        if(!aSkill.acceptSkill()){
+            return "resirect:/addskill";
+        }
+
         if(result.hasErrors()) {
             return "skillForm";
         }
@@ -123,10 +159,16 @@ public class MainController {
     public String generateResume(Model toSend, @ModelAttribute("newPerson") Person newPerson){
 
         Person myPeep = personRepository.findById(1);
-        System.out.println("my friends name is " + myPeep.getFirstName());
+        toSend.addAttribute("myPerson",myPeep);//for the name entry
 
-        toSend.addAttribute("myPerson",myPeep);
 
+        //reinforcment to have minimum or it asks for you to enter a new info (no "work experience" because there is no minimum
+        if(educationRepository.count()<1){
+            toSend.addAttribute("educationNeedsWork",false);
+        }
+        if(skillRepository.count()<1){
+            toSend.addAttribute("skillsNeedsWork",true);
+        }
 
 
         Iterable<Education> learnz = educationRepository.findAll();
