@@ -69,13 +69,13 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label"></label>
                     <div class="col-md-4">
-                        <button id="submitButton" type="submit" class="btn btn-primary" th:disabled="${outOfBounds}">Save <span class="glyphicon glyphicon-thumbs-up"></span></button>
+                        <button  name="action" action="add" type="submit" class="btn btn-primary" th:disabled="${outOfBounds}">Save <span class="glyphicon glyphicon-thumbs-up"></span></button>
                         <!--Working on "add another button- does not work-->
-                        <!--<button id="submitAnother" href="redirect:/addeducation" class="btn btn-primary">Add Another <span class="glyphicon glyphicon-thumbs-up"></span></button>-->
-                        <form action="/addanothereducation">
-                            <input class="btn btn-primary" type="submit" value="Add Another"></input>
-                        </form>
-
+                        <button  name="action" action="addanother" type="submit" class="btn btn-primary">Add Another <span class="glyphicon glyphicon-thumbs-up"></span></button>
+                        <!--<form action="/addanothereducation">-->
+                            <!--<input class="btn btn-primary" type="submit" value="Add Another"></input>-->
+                        <!--</form>-->
+<!--Issue is probably from having two actions!-->
                         <button id="resetButton" type="reset" class="btn btn-primary">Clear <span class="glyphicon glyphicon-thumbs-down"></span></button>
                     </div>
                 </div>

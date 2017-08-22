@@ -65,17 +65,33 @@ public class MainController {
         return "educationForm";
     }
 
-    @PostMapping("/addeducation")
-    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+//    @PostMapping("/addeducation")
+//    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+//        toSend.addAttribute("isNew",false);
+//        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
+//        //forces user to enter atleast one education (wont take a blank entry)
+//        if(!anEducation.acceptEducation()){
+//            return "redirect:/addeducation";
+//        }
+//        if(result.hasErrors()){
+//            return "educationForm";
+//        }
+//        educationRepository.save(anEducation);
+//
+//        return "redirect:/addwork";
+//    }
+//    trying to use a request mapping strategy to allow an addAdditional
+    @RequestMapping(value="/addeducation", method=RequestMethod.POST)
+    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result, @RequestParam(value="action") String action){
+        System.out.println("my action is " + action);
+
         toSend.addAttribute("isNew",false);
         //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
         //forces user to enter atleast one education (wont take a blank entry)
         if(!anEducation.acceptEducation()){
             return "redirect:/addeducation";
         }
-
         if(result.hasErrors()){
-
             return "educationForm";
         }
         educationRepository.save(anEducation);
@@ -83,19 +99,7 @@ public class MainController {
         return "redirect:/addwork";
     }
 
-    //Add another education does not work
-    @PostMapping("/addanothereducation")
-    public String addAnother(@Valid @ModelAttribute("anEducation") Education anEducation, Model toSend, BindingResult result){
-        toSend.addAttribute("isNew",false);
 
-        if(result.hasErrors()){
-            return "educationForm";
-        }
-        educationRepository.save(anEducation);
-
-        return "redirect:/addeducation";
-
-    }
 
 
 //Work
