@@ -49,3 +49,9 @@
 .conditional-not-hidden{
     display:inline;
 }
+body{
+    background-color:darkorange;
+}
+#pCenter {
+    text-align: center;
+}

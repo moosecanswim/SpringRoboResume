@@ -4,107 +4,122 @@
 <head>
 
     <title>Add Employment History</title>
-    <th:block th:replace="base::header"></th:block>
+    <th:block th:replace="base::header2"></th:block>
 
 </head>
 
 <body id="page-top">
-    <th:block th:replace="base::navigation"></th:block>
-        <div class="container" boarder="1px">
-            <form  class="well form-horizontal"
-                   action="#"
-                   th:action="@{/addwork}"
-                   th:object="${aJob}"
-                   method="post">
-                <fieldset>
-                    <Legend th:text="${isNew}? 'Add Employment History':'Update Employment Information'">Work</Legend>
+    <th:block th:replace="base::navigation2"></th:block>
 
-                    <div th:if="${isNew}">
-                        <p><strong th:text="${jobCount}"></strong>/10</p>
-                    </div>
 
-                    <!--hidden-->
-                    <input type="hidden" th:field="*{id}">
+    <div id="wrapper">
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="container" boarder="1px">
+                            <form  class="well form-horizontal"
+                                   action="#"
+                                   th:action="@{/addwork}"
+                                   th:object="${aJob}"
+                                   method="post">
+                                <fieldset>
+                                    <Legend th:text="${isNew}? 'Add Employment History':'Update Employment Information'">Work</Legend>
 
-                    <!--Company-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Company</label>
-                        <div class="col-md-4 inputGroupContainer">
-                            <div class="input-group">
-                                <input th:type="text" th:field="*{company}"/> <br />
-                                <span th:if="${#fields.hasErrors('company')}"
-                                      th:errors="*{company}"></span><br />
-                            </div>
-                        </div>
-                    </div>
-                    <!--Position-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Position</label>
-                        <div class="col-md-4 inputGroupContainer">
-                            <div class="input-group">
-                                <input th:type="text" th:field="*{position}"/><br />
-                                <span th:if="${#fields.hasErrors('position')}"
-                                      th:errors="*{position}"></span><br />
-                            </div>
-                        </div>
-                    </div>
-                    <!--Start Date-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Start Date</label>
-                        <div class="col-md-4 inputGroupContainer">
-                            <div class="input-group">
-                                <input th:type="text" th:field="*{startDate}"/><br />
-                                <span th:if="${#fields.hasErrors('startDate')}"
-                                      th:errors="*{startDate}"></span><br />
-                            </div>
-                        </div>
-                    </div>
-                    <!--End Date-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">End Date</label>
-                        <div class="col-md-4 inputGroupContainer">
-                            <div class="input-group">
-                                <input th:type="text" th:field="*{endDate}"/> <br />
-                                <span th:if="${#fields.hasErrors('endDate')}"
-                                      th:errors="*{endDate}"></span><br />
-                            </div>
-                        </div>
-                    </div>
-                    <!--Duty 1-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Duty 1</label>
-                        <div class="col-md-4 inputGroupContainer">
-                            <div class="input-group">
-                                <input th:type="text" th:field="*{duty1}"/><br />
-                                <span th:if="${#fields.hasErrors('duty1')}"
-                                      th:errors="*{duty1}"></span><br />
-                            </div>
-                        </div>
-                    </div>
-                    <!--Duty 2-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Duty 2</label>
-                        <div class="col-md-4 inputGroupContainer">
-                            <div class="input-group">
-                                <input th:type="text" th:field="*{duty2}"/><br />
-                                <span th:if="${#fields.hasErrors('duty2')}"
-                                      th:errors="*{duty2}"></span><br />
-                            </div>
-                        </div>
-                    </div>
+                                    <div th:if="${isNew}">
+                                        <p><strong th:text="${jobCount}"></strong>/10</p>
+                                    </div>
 
-                    <!--Submit and clear buttons-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label"></label>
-                        <div class="col-md-4">
-                            <button id="submitButton" type="submit" class="btn btn-primary" th:disabled="${outOfBounds}">Save <span class="glyphicon glyphicon-thumbs-up"></span></button>
-                            <button id="resetButton" type="reset" class="btn btn-primary">Clear <span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                    <!--hidden-->
+                                    <input type="hidden" th:field="*{id}">
+
+                                    <!--Company-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Company</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input th:type="text" th:field="*{company}"/> <br />
+                                                <span th:if="${#fields.hasErrors('company')}"
+                                                      th:errors="*{company}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Position-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Position</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input th:type="text" th:field="*{position}"/><br />
+                                                <span th:if="${#fields.hasErrors('position')}"
+                                                      th:errors="*{position}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Start Date-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Start Date</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input th:type="text" th:field="*{startDate}"/><br />
+                                                <span th:if="${#fields.hasErrors('startDate')}"
+                                                      th:errors="*{startDate}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Date-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">End Date</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input th:type="text" th:field="*{endDate}"/> <br />
+                                                <span th:if="${#fields.hasErrors('endDate')}"
+                                                      th:errors="*{endDate}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Duty 1-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Duty 1</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input th:type="text" th:field="*{duty1}"/><br />
+                                                <span th:if="${#fields.hasErrors('duty1')}"
+                                                      th:errors="*{duty1}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Duty 2-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Duty 2</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input th:type="text" th:field="*{duty2}"/><br />
+                                                <span th:if="${#fields.hasErrors('duty2')}"
+                                                      th:errors="*{duty2}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Submit and clear buttons-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label"></label>
+                                        <div class="col-md-4">
+                                            <button id="submitButton" type="submit" class="btn btn-primary" th:disabled="${outOfBounds}">Save <span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                            <button id="resetButton" type="reset" class="btn btn-primary">Clear <span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
                         </div>
+
                     </div>
-                </fieldset>
-            </form>
+                </div>
+            </div>
         </div>
-    <th:block th:replace="base::footer"></th:block>
+    </div>
+
+
+    <th:block th:replace="base::footer2"></th:block>
 </body>
 
 </html>

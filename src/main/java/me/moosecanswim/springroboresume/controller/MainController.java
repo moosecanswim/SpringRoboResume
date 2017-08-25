@@ -84,9 +84,6 @@ public class MainController {
     }
 
 
-
-
-
 //Work
     @GetMapping("/addwork")
     public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson){
@@ -150,29 +147,48 @@ public class MainController {
         Person myPeep = personRepository.findById(1);
         toSend.addAttribute("myPerson",myPeep);//for the name entry
 
+       //prompt user to fill in stuff
         Boolean educationNeedsWork=false;
-        Boolean workNeedsWork=false;
-        Boolean skillsNeedsWork=false;
-        //reinforcment to have minimum or it asks for you to enter a new info (no "work experience" because there is no minimum
         if(educationRepository.count()<1){
             educationNeedsWork=true;
         }
-        //if we have a minimum work experience then we can add this in for conditional formatting
-        //this just allows the link to add another job to apear when the table is empty
+        Boolean workNeedsWork=false; //this allows me to enagle a css verification on generate resume.  currently true and false have the same outcome
         if(jobRepository.count()<1){
             workNeedsWork=true;
         }
+        Boolean skillsNeedsWork=false;
         if(skillRepository.count()<1){
             skillsNeedsWork=true;
         }
-        System.out.println("education needs work " +educationNeedsWork);
-        System.out.println("work needs work " +workNeedsWork);
-        System.out.println("skills needs work " +skillsNeedsWork);
-
+        //for error checking
+//        System.out.println("education needs work " +educationNeedsWork);
+//        System.out.println("work needs work " +workNeedsWork);
+//        System.out.println("skills needs work " +skillsNeedsWork);
 
         toSend.addAttribute("educationNeedsWork",educationNeedsWork);
         toSend.addAttribute("workNeedsWork",workNeedsWork);
         toSend.addAttribute("skillsNeedsWork",skillsNeedsWork);
+
+
+
+
+        //This will be used to hide the add buttons once we've met the max
+        Boolean tooMuchEducation=false;
+        if(educationRepository.count()>9){
+            tooMuchEducation=true;
+        }
+        Boolean tooMuchWork=false;
+        if(jobRepository.count()>9){
+            tooMuchWork=true;
+        }
+        Boolean tooMuchSkills=false;
+        if(skillRepository.count()>19){//should be 19 5 for testing
+            tooMuchSkills=true;
+        }
+        toSend.addAttribute("tooMuchEducation",tooMuchEducation);
+        toSend.addAttribute("tooMuchWork",tooMuchWork);
+        toSend.addAttribute("tooMuchSkills",tooMuchSkills);
+
 
 
         //send all repositories

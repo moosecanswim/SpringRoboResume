@@ -2,94 +2,118 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
     <title th:inline="text"> [[${myPerson.firstName}]]'s New Resume</title>
-    <th:block th:replace="base::header"></th:block>
+    <th:block th:replace="base::header2"></th:block>
 
     <!--My additional bootstrap-->
     <link rel="stylesheet" href="additionalcss.css"/>
 
 </head>
 <body>
-    <th:block th:replace="base::navigation"></th:block>
+    <th:block th:replace="base::navigation2"></th:block>
+
+    <div id="wrapper">
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="container">
+
+                            <h2 th:inline="text">[[${myPerson.firstName}]] [[${myPerson.lastName}]]'s New Resume</h2>
+                            <h3 th:inline="text">[[${myPerson.email}]]</h3>
 
 
-    <div class="container">
+                            <!--education-->
+                            <div class="container">
+                                <div th:class="${educationNeedsWork}? 'panel panel-danger':'panel panel-default'">
+                                    <div class="panel-heading">
+                                        <h3 th:class="${educationNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
+                                            Education:
+                                        </h3>
+                                        <h3 th:class="${educationNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
+                                            Education: <a href="/addeducation">You need to add an educational experience</a>
+                                        </h3>
+                                    </div>
 
-        <h1>Robo Resume 4000 presents</h1>
-        <h3 th:inline="text">[[${myPerson.firstName}]] [[${myPerson.lastName}]]</h3>
+                                    <div th:each="i:${myEducation}" class="panel-body">
+                                        <p th:inline="text"><strong>[[${i.degree}]]</strong>, </p>
+                                        <p th:inline="text">[[${i.school}]], [[${i.graduationDate}]] </p>
+                                        <p><a th:href="@{/update/education/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/education/{id}  (id=${i.id})}">Delete</a></p>
+
+                                    </div>
+                                    <div class="center">
+                                        <p th:class="${tooMuchEducation}? 'conditional-hidden':'conditional-not-hidden'">
+                                            <a href="/addeducation">Add another educational experience</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--work-->
+                            <div class="container">
+                                <div th:class="${workNeedsWork}? 'panel panel-default':'panel panel-default'">
+                                    <div class="panel-heading">
+                                        <h3 th:class="${workNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
+                                            Work Experience:
+                                        </h3>
+                                        <h3 th:class="${workNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
+                                            Work Experience: <a href="/addwork">would you like to add work experience</a>
+                                        </h3>
+                                    </div>
+                                    <div th:each="i:${myWork}" class="panel-body">
+                                        <p th:inline="text"><strong>[[${i.position}]]</strong> </p>
+                                        <p th:inline="text">[[${i.company}]], [[${i.startDate}]] - [[${i.endDate}]]</p>
+                                        <p th:inline="text"> -Duty 1: [[${i.duty1}]]</p>
+                                        <p th:inline="text"> -Duty 2: [[${i.duty2}]]</p>
+
+                                        <p><a th:href="@{/update/work/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/work/{id}  (id=${i.id})}">Delete</a></p>
+
+                                    </div>
+
+                                    <div class="center">
+                                        <p th:class="${tooMuchWork}? 'conditional-hidden':'conditional-not-hidden'">
+                                            <a href="/addwork">Add another work experience</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
 
 
-        <!--education-->
-        <div class="container">
-            <div th:class="${educationNeedsWork}? 'panel panel-danger':'panel panel-default'">
-                <div class="panel-heading">
-                    <h3 th:class="${educationNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
-                        Education:
-                    </h3>
-                    <h3 th:class="${educationNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
-                        Education: <a href="/addeducation">You need to add an educational experience</a>
-                    </h3>
-                </div>
+                            <!--skill-->
+                            <div class="container">
+                                <div th:class="${skillsNeedsWork}? 'panel panel-danger':'panel panel-default'">
+                                    <div class="panel-heading">
+                                        <h3 th:class="${skillsNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
+                                            Skills:
+                                        </h3>
+                                        <h3 th:class="${skillsNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
+                                            Skills: <a href="/addskill">You need to add a skill</a>
+                                        </h3>
+                                    </div>
 
-                <div th:each="i:${myEducation}" class="panel-body">
-                    <p th:inline="text"><strong>[[${i.degree}]]</strong>, </p>
-                    <p th:inline="text">[[${i.school}]], [[${i.graduationDate}]] </p>
-                    <p><a th:href="@{/update/education/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/education/{id}  (id=${i.id})}">Delete</a></p>
+                                    <div th:each="i:${mySkills}" class="panel-body">
+                                        <p th:inline="text">Skill- [[${i.skill}]]: [[${i.rating}]]</p>
+                                        <p><a th:href="@{/update/skill/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/skill/{id}  (id=${i.id})}">Delete</a></p>
+                                    </div>
+                                    <div class="center">
+                                        <p th:class="${tooMuchSkills}? 'conditional-hidden':'conditional-not-hidden'">
+                                            <a href="/addskill">Add more skills</a>
+                                        </p>
+                                    </div>
 
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
             </div>
-            <p><a href="/addeducation">Add another educational experience</a></p>
         </div>
-
-        <!--work-->
-        <div class="container">
-            <div th:class="${workNeedsWork}? 'panel panel-default':'panel panel-default'">
-                <div class="panel-heading">
-                    <h3 th:class="${workNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
-                        Work Experience:
-                    </h3>
-                    <h3 th:class="${workNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
-                        Work Experience: <a href="/addwork">would you like to add work experience</a>
-                    </h3>
-                </div>
-                <div th:each="i:${myWork}" class="panel-body">
-                    <p th:inline="text"><strong>[[${i.position}]]</strong> </p>
-                    <p th:inline="text">[[${i.company}]], [[${i.startDate}]] - [[${i.endDate}]]</p>
-                    <p th:inline="text"> -Duty 1: [[${i.duty1}]]</p>
-                    <p th:inline="text"> -Duty 2: [[${i.duty2}]]</p>
-
-                    <p><a th:href="@{/update/work/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/work/{id}  (id=${i.id})}">Delete</a></p>
-
-                </div>
-            </div>
-            <p><a href="/addwork">Add another work experience</a></p>
-        </div>
-
-
-        <!--skill-->
-        <div class="container">
-            <div th:class="${skillsNeedsWork}? 'panel panel-danger':'panel panel-default'">
-                <div class="panel-heading">
-                    <h3 th:class="${skillsNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
-                        Skills:
-                    </h3>
-                    <h3 th:class="${skillsNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
-                        Skills: <a href="/addskill">You need to add a skill</a>
-                    </h3>
-                </div>
-
-                <div th:each="i:${mySkills}" class="panel-body">
-                    <p th:inline="text">Skill- [[${i.skill}]]: [[${i.rating}]]</p>
-                    <p><a th:href="@{/update/skill/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/skill/{id}  (id=${i.id})}">Delete</a></p>
-                </div>
-            </div>
-            <p><a href="/addskill">Add more skills</a></p>
-        </div>
-
-
-
-        <h2><a href="/">Start over</a></h2>
     </div>
 
-    <th:block th:replace="base::footer"></th:block>
+
+
+
+    <th:block th:replace="base::footer2"></th:block>
 </body>
 </html>
