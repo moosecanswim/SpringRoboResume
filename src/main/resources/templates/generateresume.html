@@ -3,9 +3,14 @@
 <head lang="en">
     <title th:inline="text"> [[${myPerson.firstName}]]'s New Resume</title>
     <th:block th:replace="base::header"></th:block>
+
+    <!--My additional bootstrap-->
+    <link rel="stylesheet" href="additionalcss.css"/>
+
 </head>
 <body>
     <th:block th:replace="base::navigation"></th:block>
+
 
     <div class="container">
 
@@ -15,17 +20,15 @@
 
         <!--education-->
         <div class="container">
-            <div class="panel panel-default">
+            <div th:class="${educationNeedsWork}? 'panel panel-danger':'panel panel-default'">
                 <div class="panel-heading">
-                     <h3>Education:</h3>
+                    <h3 th:class="${educationNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
+                        Education:
+                    </h3>
+                    <h3 th:class="${educationNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
+                        Education: <a href="/addeducation">You need to add an educational experience</a>
+                    </h3>
                 </div>
-                <!--entry for if there are no enteries/ does not meet minimun required-->
-                <div th:style="${educationNeedsWork}? 'visability:visable':'visability:hidden' ">
-                    <a  href="/addeducation">Add Some Education 2</a>
-                    <p>stuff stuff stuff</p>
-                </div>
-
-
 
                 <div th:each="i:${myEducation}" class="panel-body">
                     <p th:inline="text"><strong>[[${i.degree}]]</strong>, </p>
@@ -39,9 +42,14 @@
 
         <!--work-->
         <div class="container">
-            <div class="panel panel-default">
+            <div th:class="${workNeedsWork}? 'panel panel-default':'panel panel-default'">
                 <div class="panel-heading">
-                    <h3>Work Experience:</h3>
+                    <h3 th:class="${workNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
+                        Work Experience:
+                    </h3>
+                    <h3 th:class="${workNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
+                        Work Experience: <a href="/addwork">would you like to add work experience</a>
+                    </h3>
                 </div>
                 <div th:each="i:${myWork}" class="panel-body">
                     <p th:inline="text"><strong>[[${i.position}]]</strong> </p>
@@ -56,12 +64,19 @@
             <p><a href="/addwork">Add another work experience</a></p>
         </div>
 
+
         <!--skill-->
         <div class="container">
-            <div class="panel panel-default">
+            <div th:class="${skillsNeedsWork}? 'panel panel-danger':'panel panel-default'">
                 <div class="panel-heading">
-                    <h3>Skills:</h3>
+                    <h3 th:class="${skillsNeedsWork}? 'conditional-hidden':'conditional-not-hidden' ">
+                        Skills:
+                    </h3>
+                    <h3 th:class="${skillsNeedsWork}? 'conditional-not-hidden':'conditional-hidden'">
+                        Skills: <a href="/addskill">You need to add a skill</a>
+                    </h3>
                 </div>
+
                 <div th:each="i:${mySkills}" class="panel-body">
                     <p th:inline="text">Skill- [[${i.skill}]]: [[${i.rating}]]</p>
                     <p><a th:href="@{/update/skill/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/skill/{id}  (id=${i.id})}">Delete</a></p>

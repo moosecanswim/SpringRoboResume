@@ -57,34 +57,18 @@ public class MainController {
         toSend.addAttribute("educationCount",(educationRepository.count()+1));
 
         Boolean outOfBounds=false;
-        if(educationRepository.count()>10){
+        if(educationRepository.count()>9){
             outOfBounds=true;
         }
+        System.out.println("education repo has " + educationRepository.count() + " enteries");
+        System.out.println(outOfBounds);
         toSend.addAttribute("outOfBounds",outOfBounds);
 
         return "educationForm";
     }
 
-//    @PostMapping("/addeducation")
-//    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
-//        toSend.addAttribute("isNew",false);
-//        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
-//        //forces user to enter atleast one education (wont take a blank entry)
-//        if(!anEducation.acceptEducation()){
-//            return "redirect:/addeducation";
-//        }
-//        if(result.hasErrors()){
-//            return "educationForm";
-//        }
-//        educationRepository.save(anEducation);
-//
-//        return "redirect:/addwork";
-//    }
-//    trying to use a request mapping strategy to allow an addAdditional
-    @RequestMapping(value="/addeducation", method=RequestMethod.POST)
-    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result, @RequestParam(value="action") String action){
-        System.out.println("my action is " + action);
-
+    @PostMapping("/addeducation")
+    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
         toSend.addAttribute("isNew",false);
         //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
         //forces user to enter atleast one education (wont take a blank entry)
@@ -98,6 +82,7 @@ public class MainController {
 
         return "redirect:/addwork";
     }
+
 
 
 
@@ -165,16 +150,32 @@ public class MainController {
         Person myPeep = personRepository.findById(1);
         toSend.addAttribute("myPerson",myPeep);//for the name entry
 
-
+        Boolean educationNeedsWork=false;
+        Boolean workNeedsWork=false;
+        Boolean skillsNeedsWork=false;
         //reinforcment to have minimum or it asks for you to enter a new info (no "work experience" because there is no minimum
         if(educationRepository.count()<1){
-            toSend.addAttribute("educationNeedsWork",false);
+            educationNeedsWork=true;
+        }
+        //if we have a minimum work experience then we can add this in for conditional formatting
+        //this just allows the link to add another job to apear when the table is empty
+        if(jobRepository.count()<1){
+            workNeedsWork=true;
         }
         if(skillRepository.count()<1){
-            toSend.addAttribute("skillsNeedsWork",true);
+            skillsNeedsWork=true;
         }
+        System.out.println("education needs work " +educationNeedsWork);
+        System.out.println("work needs work " +workNeedsWork);
+        System.out.println("skills needs work " +skillsNeedsWork);
 
 
+        toSend.addAttribute("educationNeedsWork",educationNeedsWork);
+        toSend.addAttribute("workNeedsWork",workNeedsWork);
+        toSend.addAttribute("skillsNeedsWork",skillsNeedsWork);
+
+
+        //send all repositories
         Iterable<Education> learnz = educationRepository.findAll();
         toSend.addAttribute("myEducation", learnz);
         Iterable<Job> workz = jobRepository.findAll();

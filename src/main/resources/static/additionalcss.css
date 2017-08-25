@@ -38,3 +38,14 @@
     margin-top: -20px;
     font-size: 15px;
 }
+
+.danger-zone{
+    font-size:25px;
+    color:orangered;
+}
+.conditional-hidden{
+    display:none;
+}
+.conditional-not-hidden{
+    display:inline;
+}
