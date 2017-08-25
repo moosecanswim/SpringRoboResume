@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 public class Skill {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @NotNull
     private long id;
     @NotBlank
     private String skill;

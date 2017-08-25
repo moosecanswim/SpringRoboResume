@@ -117,7 +117,7 @@ public class MainController {
 
         toSend.addAttribute("skillCount", (skillRepository.count()+1));
         Boolean outOfBounds=null;
-        if(skillRepository.count()>20){
+        if(skillRepository.count()>19){
             outOfBounds=true;
         }
         return "skillForm";
@@ -147,42 +147,45 @@ public class MainController {
         Person myPeep = personRepository.findById(1);
         toSend.addAttribute("myPerson",myPeep);//for the name entry
 
-       //prompt user to fill in stuff
+
+        long eduCount=educationRepository.count();
+        long jobCount=jobRepository.count();
+        long skillCount=skillRepository.count();
+        toSend.addAttribute("eduCount",eduCount);
+        toSend.addAttribute("jobCount",jobCount);
+        toSend.addAttribute("skillCount",skillCount);
+
+
+        //This will monitor the minimum needed (and add a link on the generate page if more are needed)
         Boolean educationNeedsWork=false;
-        if(educationRepository.count()<1){
+        if(eduCount<1){
             educationNeedsWork=true;
         }
         Boolean workNeedsWork=false; //this allows me to enagle a css verification on generate resume.  currently true and false have the same outcome
-        if(jobRepository.count()<1){
+        if(jobCount<1){
             workNeedsWork=true;
         }
         Boolean skillsNeedsWork=false;
-        if(skillRepository.count()<1){
+        if(skillCount<1){
             skillsNeedsWork=true;
         }
-        //for error checking
-//        System.out.println("education needs work " +educationNeedsWork);
-//        System.out.println("work needs work " +workNeedsWork);
-//        System.out.println("skills needs work " +skillsNeedsWork);
 
         toSend.addAttribute("educationNeedsWork",educationNeedsWork);
         toSend.addAttribute("workNeedsWork",workNeedsWork);
         toSend.addAttribute("skillsNeedsWork",skillsNeedsWork);
 
 
-
-
         //This will be used to hide the add buttons once we've met the max
         Boolean tooMuchEducation=false;
-        if(educationRepository.count()>9){
+        if(eduCount>9){
             tooMuchEducation=true;
         }
         Boolean tooMuchWork=false;
-        if(jobRepository.count()>9){
+        if(jobCount>9){
             tooMuchWork=true;
         }
         Boolean tooMuchSkills=false;
-        if(skillRepository.count()>19){//should be 19 5 for testing
+        if(skillCount>19){//should be 19 (4 for testing)
             tooMuchSkills=true;
         }
         toSend.addAttribute("tooMuchEducation",tooMuchEducation);

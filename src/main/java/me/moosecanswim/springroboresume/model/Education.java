@@ -1,5 +1,7 @@
 package me.moosecanswim.springroboresume.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,11 +12,10 @@ import javax.validation.constraints.NotNull;
 public class Education  {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @NotNull
     private long id;
-    @NotNull
+    @NotBlank
     private String school;
-    @NotNull
+    @NotBlank
     private String degree;
     private String graduationDate;
 

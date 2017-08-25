@@ -1,6 +1,7 @@
 package me.moosecanswim.springroboresume.model;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,13 +16,11 @@ public class Person {
     @Id
     private long id;
 
-
-
-    @NotNull
+    @NotBlank
     private String firstName;
-    @NotNull
+    @NotBlank
     private String lastName;
-    @NotNull
+    @NotBlank
     @Email
     private String email;
 

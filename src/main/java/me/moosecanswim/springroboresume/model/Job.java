@@ -1,5 +1,7 @@
 package me.moosecanswim.springroboresume.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +15,12 @@ import java.util.Locale;
 public class Job {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @NotNull
+    @NotBlank
     private long id;
-    @NotNull
+    @NotBlank
     private String company;
     private String position;
-    @NotNull
+    @NotBlank
     private String startDate;
     private String endDate;
     private String duty1;

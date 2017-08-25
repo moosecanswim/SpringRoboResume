@@ -55,3 +55,19 @@ body{
 #pCenter {
     text-align: center;
 }
+.counter-color{
+    color:#e6e6e6;
+}
+
+/*for the transparent pannels*/
+.panel-transparent {
+    background: none;
+}
+
+.panel-transparent .panel-heading{
+    background: rgba(122, 130, 136, 0.2)!important;
+}
+
+.panel-transparent .panel-body{
+    background: rgba(46, 51, 56, 0.2)!important;
+}
