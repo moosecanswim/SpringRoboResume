@@ -15,7 +15,6 @@ import java.util.Locale;
 public class Job {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @NotBlank
     private long id;
     @NotBlank
     private String company;
