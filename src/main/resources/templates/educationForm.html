@@ -90,9 +90,25 @@
                                     <div class="form-group">
                                         <label class="col-md-4 control-label"></label>
                                         <div class="col-md-4">
-                                            <button  name="action" type="submit" class="btn btn-primary" th:disabled="${outOfBounds}">Save <span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                            <button type="submit"
+                                                    class="btn btn-primary"
+                                                    th:disabled="${outOfBounds}"
+                                                    name="addOne"
+                                                    value="Save">Save
+                                                    <span class="glyphicon glyphicon-thumbs-up">
+
+                                                    </span>
+                                            </button>
                                             <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
-                                            <button  name="action" type="submit" class="btn btn-primary">Add Another <span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                            <button type="submit"
+                                                    class="btn btn-primary"
+                                                    th:disabled="${outOfBounds}"
+                                                    name="addAnother"
+                                                    value="Add Another">Save and Add Another
+                                                    <span class="glyphicon glyphicon-thumbs-up">
+
+                                                    </span>
+                                            </button>
 
                                             <button id="resetButton" type="reset" class="btn btn-primary">Clear <span class="glyphicon glyphicon-thumbs-down"></span></button>
                                         </div>

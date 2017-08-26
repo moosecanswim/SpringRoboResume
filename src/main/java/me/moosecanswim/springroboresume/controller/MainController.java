@@ -18,6 +18,8 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @Controller
 public class MainController {
     @Autowired
@@ -67,8 +69,41 @@ public class MainController {
         return "educationForm";
     }
 
-    @PostMapping("/addeducation")
-    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+//    @PostMapping("/addeducation")
+//    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+//        toSend.addAttribute("isNew",false);
+//        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
+//        //forces user to enter atleast one education (wont take a blank entry)
+//        if(!anEducation.acceptEducation()){
+//            return "redirect:/addeducation";
+//        }
+//        if(result.hasErrors()){
+//            return "educationForm";
+//        }
+//        educationRepository.save(anEducation);
+//
+//        return "redirect:/addwork";
+//    }
+    //Save and move to Work Education
+    @RequestMapping(value="/addeducation", method=POST, params={"addOne"})
+    public String addOne(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+        System.out.println("You're going to add one and move on");
+        toSend.addAttribute("isNew",false);
+        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
+        //forces user to enter atleast one education (wont take a blank entry)
+        if(!anEducation.acceptEducation()){
+            return "redirect:/addeducation";
+        }
+        if(result.hasErrors()){
+            return "educationForm";
+        }
+        educationRepository.save(anEducation);
+        return "redirect:/addwork";
+    }
+    //Save and add another education
+    @RequestMapping(value="/addeducation", method=POST, params={"addAnother"})
+    public String addMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+        System.out.println("You're going to add multiple");
         toSend.addAttribute("isNew",false);
         //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
         //forces user to enter atleast one education (wont take a blank entry)
@@ -80,9 +115,8 @@ public class MainController {
         }
         educationRepository.save(anEducation);
 
-        return "redirect:/addwork";
+        return "redirect:/addeducation";
     }
-
 
 //Work
     @GetMapping("/addwork")
