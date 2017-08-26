@@ -25,7 +25,7 @@
                                     <legend th:text="${isNew}? 'Add Skill' : 'Update Skill'"></legend>
 
                                     <div th:if="${isNew}">
-                                        <p><strong th:text="${skillCount}"></strong>/10</p>
+                                        <p><strong th:text="${skillCount}"></strong>/20</p>
                                     </div>
 
 
@@ -55,11 +55,30 @@
                                         </div>
                                     </div>
 
-                                    <!--Submit and clear buttons-->
+                                    <!--buttons-->
                                     <div class="form-group">
                                         <label class="col-md-4 control-label"></label>
                                         <div class="col-md-4">
-                                            <button id="submitButton" type="submit" class="btn btn-primary" th:disabled="${outOfBounds}">Save <span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                            <button type="submit"
+                                                    class="btn btn-primary"
+                                                    th:disabled="${outOfBounds}"
+                                                    name="addOne"
+                                                    value="Save">Save and Generate Resume
+                                                <span class="glyphicon glyphicon-thumbs-up">
+
+                                                    </span>
+                                            </button>
+                                            <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
+                                            <button type="submit"
+                                                    class="btn btn-primary"
+                                                    th:disabled="${outOfBounds}"
+                                                    name="addAnother"
+                                                    value="Add Another">Save and Add Another Skill
+                                                <span class="glyphicon glyphicon-thumbs-up">
+
+                                                    </span>
+                                            </button>
+
                                             <button id="resetButton" type="reset" class="btn btn-primary">Clear <span class="glyphicon glyphicon-thumbs-down"></span></button>
                                         </div>
                                     </div>

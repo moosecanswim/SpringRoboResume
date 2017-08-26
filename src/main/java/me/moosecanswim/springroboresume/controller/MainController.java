@@ -69,24 +69,9 @@ public class MainController {
         return "educationForm";
     }
 
-//    @PostMapping("/addeducation")
-//    public String confirmEducationAndAddMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
-//        toSend.addAttribute("isNew",false);
-//        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
-//        //forces user to enter atleast one education (wont take a blank entry)
-//        if(!anEducation.acceptEducation()){
-//            return "redirect:/addeducation";
-//        }
-//        if(result.hasErrors()){
-//            return "educationForm";
-//        }
-//        educationRepository.save(anEducation);
-//
-//        return "redirect:/addwork";
-//    }
-    //Save and move to Work Education
+    //Save Education and move to Work
     @RequestMapping(value="/addeducation", method=POST, params={"addOne"})
-    public String addOne(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+    public String addOneEducation(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
         System.out.println("You're going to add one and move on");
         toSend.addAttribute("isNew",false);
         //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
@@ -97,12 +82,17 @@ public class MainController {
         if(result.hasErrors()){
             return "educationForm";
         }
+        Boolean outOfBounds=false;
+        if(educationRepository.count()>9){
+            outOfBounds=true;
+        }
+        toSend.addAttribute("outOfBounds",outOfBounds);
         educationRepository.save(anEducation);
         return "redirect:/addwork";
     }
-    //Save and add another education
+    //Save Education and add another education
     @RequestMapping(value="/addeducation", method=POST, params={"addAnother"})
-    public String addMore(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
+    public String addMoreEducation(@Valid @ModelAttribute("anEducation") Education anEducation,Model toSend, BindingResult result){
         System.out.println("You're going to add multiple");
         toSend.addAttribute("isNew",false);
         //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
@@ -113,6 +103,11 @@ public class MainController {
         if(result.hasErrors()){
             return "educationForm";
         }
+        Boolean outOfBounds=false;
+        if(educationRepository.count()>9){
+            outOfBounds=true;
+        }
+        toSend.addAttribute("outOfBounds",outOfBounds);
         educationRepository.save(anEducation);
 
         return "redirect:/addeducation";
@@ -125,22 +120,55 @@ public class MainController {
         toSend.addAttribute("aJob", new Job());
         toSend.addAttribute("jobCount",(jobRepository.count()+1));
 
-        Boolean outOfBounds=null;
-        if(jobRepository.count()>10){
+        Boolean outOfBounds=false;
+        if(jobRepository.count()>9){
             outOfBounds=true;
         }
-
+        toSend.addAttribute("outOfBounds",outOfBounds);
         return "workForm";
     }
-    @PostMapping("/addwork")
-    public String confirmWorkAndAddMore(@Valid @ModelAttribute("aJob") Job aJob, @ModelAttribute("newPerson") Person newPerson, BindingResult result,Model toSend){
+//    @PostMapping("/addwork")
+//    public String confirmWorkAndAddMore(@Valid @ModelAttribute("aJob") Job aJob, @ModelAttribute("newPerson") Person newPerson, BindingResult result,Model toSend){
+//        toSend.addAttribute("isNew",false);
+//        if(result.hasErrors()){
+//            return "workForm";
+//        }
+//        jobRepository.save(aJob);
+//        return "redirect:/addskill";
+//    }
+    //Save Work and move to Skills
+    @RequestMapping(value="/addwork", method=POST, params={"addOne"})
+    public String addOneWork(@Valid @ModelAttribute("aJob") Job aJob,Model toSend, BindingResult result){
+        System.out.println("You're going to add one and move on");
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "workForm";
         }
+        Boolean outOfBounds=false;
+        if(jobRepository.count()>9){
+            outOfBounds=true;
+        }
+        toSend.addAttribute("outOfBounds",outOfBounds);
         jobRepository.save(aJob);
         return "redirect:/addskill";
     }
+    //Save Work and add another work
+    @RequestMapping(value="/addwork", method=POST, params={"addAnother"})
+    public String addMoreWork(@Valid @ModelAttribute("aJob") Job aJob,Model toSend, BindingResult result){
+        System.out.println("You're going to add multiple");
+        toSend.addAttribute("isNew",false);
+        if(result.hasErrors()){
+            return "workForm";
+        }Boolean outOfBounds=false;
+        if(jobRepository.count()>9){
+            outOfBounds=true;
+        }
+        toSend.addAttribute("outOfBounds",outOfBounds);
+        jobRepository.save(aJob);
+
+        return "redirect:/addwork";
+    }
+
 
 //Skills
     @GetMapping("/addskill")
@@ -150,29 +178,62 @@ public class MainController {
         toSend.addAttribute("aSkill", new Skill());
 
         toSend.addAttribute("skillCount", (skillRepository.count()+1));
-        Boolean outOfBounds=null;
+        Boolean outOfBounds=false;
         if(skillRepository.count()>19){
             outOfBounds=true;
         }
+        toSend.addAttribute("outOfBounds",outOfBounds);
         return "skillForm";
     }
-    @PostMapping("/addskill")
-    public String confirmSkillAndAddMore(@Valid @ModelAttribute("aSkill") Skill aSkill, @ModelAttribute("newPerson") Person newPerson, BindingResult result, Model toSend){
+//    @PostMapping("/addskill")
+//    public String confirmSkillAndAddMore(@Valid @ModelAttribute("aSkill") Skill aSkill, @ModelAttribute("newPerson") Person newPerson, BindingResult result, Model toSend){
+//        toSend.addAttribute("isNew",false);
+//
+//        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
+//        //forces user to enter atleast one education (wont take a blank entry)
+//        if(!aSkill.acceptSkill()){
+//            return "resirect:/addskill";
+//        }
+//
+//        if(result.hasErrors()) {
+//            return "skillForm";
+//        }
+//        skillRepository.save(aSkill);
+//
+//        return "redirect:/generateresume";
+//    }
+//Save skill and move to generate resume
+    @RequestMapping(value="/addskill", method=POST, params={"addOne"})
+    public String addOneSkill(@Valid @ModelAttribute("aSkill") Skill aSkill,Model toSend, BindingResult result){
+        System.out.println("You're going to add one and move on");
         toSend.addAttribute("isNew",false);
-
-        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
-        //forces user to enter atleast one education (wont take a blank entry)
-        if(!aSkill.acceptSkill()){
-            return "resirect:/addskill";
-        }
-
-        if(result.hasErrors()) {
+        if(result.hasErrors()){
             return "skillForm";
         }
+        Boolean outOfBounds=false;
+        if(skillRepository.count()>19){
+            outOfBounds=true;
+        }
+        toSend.addAttribute("outOfBounds",outOfBounds);
         skillRepository.save(aSkill);
-
         return "redirect:/generateresume";
     }
+        //Save skill and add another skill
+        @RequestMapping(value="/addskill", method=POST, params={"addAnother"})
+        public String addMoreSkill(@Valid @ModelAttribute("aSkill") Skill aSkill,Model toSend, BindingResult result){
+            System.out.println("You're going to add one and move on");
+            toSend.addAttribute("isNew",false);
+            if(result.hasErrors()){
+                return "skillForm";
+            }
+            Boolean outOfBounds=false;
+            if(skillRepository.count()>19){
+                outOfBounds=true;
+            }
+            toSend.addAttribute("outOfBounds",outOfBounds);
+            skillRepository.save(aSkill);
+            return "redirect:/addskill";
+        }
 
     //Generate Resume
     @GetMapping("/generateresume")
@@ -245,21 +306,21 @@ public class MainController {
     @RequestMapping("/update/{type}/{id}")
     public String update(@PathVariable("type") String type, @PathVariable("id") long id, Model toSend){
         String output=null;
-        toSend.addAttribute("anEducation" ,educationRepository.findOne(id));
-        toSend.addAttribute("aJob",jobRepository.findOne(id));
-        toSend.addAttribute("aSkill",skillRepository.findOne(id));
 
         toSend.addAttribute("isNew",false);
 
         switch(type){
             case "education":
+                toSend.addAttribute("anEducation" ,educationRepository.findOne(id));
                 output= "educationForm";
                 break;
 
             case "work":
+                toSend.addAttribute("aJob",jobRepository.findOne(id));
                 output= "workForm";
                 break;
             case "skill":
+                toSend.addAttribute("aSkill",skillRepository.findOne(id));
                 output= "skillForm";
                 break;
         }
