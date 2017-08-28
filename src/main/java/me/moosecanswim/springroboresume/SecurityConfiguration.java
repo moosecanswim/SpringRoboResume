@@ -26,7 +26,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER")
                 .and()
-                .withUser("dave").password("begreat").roles("ADMIN");
+                .withUser("dave").password("begreat").roles("ADMIN")
+                .and()
+                .withUser("newuser").password("newuserpa$$").roles("USER");
 
         /***
          * to add additional accounts, remove the semicolon at the
