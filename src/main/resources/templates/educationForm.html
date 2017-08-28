@@ -93,18 +93,16 @@
                                             <button type="submit"
                                                     class="btn btn-primary"
                                                     th:disabled="${outOfBounds}"
-                                                    name="addOne"
+                                                    name="button"
                                                     value="Save">
-                                                <div th:text="${isNew}? 'Save and Go to Work Input' : 'update'"></div>
-
-
+                                                <div th:text="${isNew}? 'Save and Go to Work Input' : 'Update'"></div>
                                             </button>
                                             <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
                                             <button type="submit"
                                                     class="btn btn-primary"
                                                     th:disabled="${outOfBounds} or ${!isNew}"
-                                                    name="addAnother"
-                                                    value="Add Another"><div> Save and Add Another Education</div>
+                                                    name="button"
+                                                    value="AddAnother"><div> Save and Add Another Education</div>
                                             </button>
 
                                             <button id="resetButton" type="reset" class="btn btn-primary">Clear <span class="glyphicon glyphicon-thumbs-down"></span></button>

@@ -107,16 +107,17 @@
                                             <button type="submit"
                                                     class="btn btn-primary"
                                                     th:disabled="${outOfBounds}"
-                                                    name="addOne"
-                                                    value="Save">Save and Move to Skills Section
+                                                    name="button"
+                                                    value="Save">
+                                                <div th:text="${isNew}? 'Save and Go to Skill' : 'Update'"></div>
                                                 <span class="glyphicon glyphicon-thumbs-up"></span>
                                             </button>
                                             <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
                                             <button type="submit"
                                                     class="btn btn-primary"
-                                                    th:disabled="${outOfBounds}"
-                                                    name="addAnother"
-                                                    value="Add Another">Save and Add Another Job
+                                                    th:disabled="${outOfBounds}  or ${!isNew}"
+                                                    name="button"
+                                                    value="AddAnother">Save and Add Another Job
                                                 <span class="glyphicon glyphicon-thumbs-up"></span>
                                             </button>
 
