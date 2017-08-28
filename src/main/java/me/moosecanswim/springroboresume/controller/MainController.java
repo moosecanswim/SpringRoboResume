@@ -50,7 +50,7 @@ public class MainController {
     }
 
 
-//Education
+    //Education
     @GetMapping("/addeducation")
     public String addEducation(Model toSend){
         toSend.addAttribute("isNew",true);
@@ -112,8 +112,16 @@ public class MainController {
 
         return "redirect:/addeducation";
     }
+    @RequestMapping("/updateEducation")
+    public String updateEducation(@Valid Education anEducation, BindingResult result){
+        if(result.hasErrors()){
+            return "educationForm";
+        }
+        educationRepository.save(anEducation);
+        return "redirect:/generateresume";
+    }
 
-//Work
+    //Work
     @GetMapping("/addwork")
     public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson){
         toSend.addAttribute("isNew",true);
@@ -127,15 +135,7 @@ public class MainController {
         toSend.addAttribute("outOfBounds",outOfBounds);
         return "workForm";
     }
-//    @PostMapping("/addwork")
-//    public String confirmWorkAndAddMore(@Valid @ModelAttribute("aJob") Job aJob, @ModelAttribute("newPerson") Person newPerson, BindingResult result,Model toSend){
-//        toSend.addAttribute("isNew",false);
-//        if(result.hasErrors()){
-//            return "workForm";
-//        }
-//        jobRepository.save(aJob);
-//        return "redirect:/addskill";
-//    }
+
     //Save Work and move to Skills
     @RequestMapping(value="/addwork", method=POST, params={"addOne"})
     public String addOneWork(@Valid @ModelAttribute("aJob") Job aJob,Model toSend, BindingResult result){
@@ -168,9 +168,17 @@ public class MainController {
 
         return "redirect:/addwork";
     }
+    @RequestMapping("/updateWork")
+    public String updateEducation(@Valid Job aJob, BindingResult result){
+        if(result.hasErrors()){
+            return "workForm";
+        }
+        jobRepository.save(aJob);
+        return "redirect:/generateresume";
+    }
 
 
-//Skills
+    //Skills
     @GetMapping("/addskill")
     public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson){
 
@@ -185,24 +193,8 @@ public class MainController {
         toSend.addAttribute("outOfBounds",outOfBounds);
         return "skillForm";
     }
-//    @PostMapping("/addskill")
-//    public String confirmSkillAndAddMore(@Valid @ModelAttribute("aSkill") Skill aSkill, @ModelAttribute("newPerson") Person newPerson, BindingResult result, Model toSend){
-//        toSend.addAttribute("isNew",false);
-//
-//        //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
-//        //forces user to enter atleast one education (wont take a blank entry)
-//        if(!aSkill.acceptSkill()){
-//            return "resirect:/addskill";
-//        }
-//
-//        if(result.hasErrors()) {
-//            return "skillForm";
-//        }
-//        skillRepository.save(aSkill);
-//
-//        return "redirect:/generateresume";
-//    }
-//Save skill and move to generate resume
+
+    //Save skill and move to generate resume
     @RequestMapping(value="/addskill", method=POST, params={"addOne"})
     public String addOneSkill(@Valid @ModelAttribute("aSkill") Skill aSkill,Model toSend, BindingResult result){
         System.out.println("You're going to add one and move on");
@@ -234,6 +226,18 @@ public class MainController {
             skillRepository.save(aSkill);
             return "redirect:/addskill";
         }
+    @RequestMapping("/updateSkill")
+    public String updateEducation(@Valid Skill aSkill, BindingResult result){
+        if(result.hasErrors()){
+            return "skillForm";
+        }
+       skillRepository.save(aSkill);
+        return "redirect:/generateresume";
+    }
+
+
+
+
 
     //Generate Resume
     @GetMapping("/generateresume")
