@@ -31,6 +31,12 @@ public class MainController {
     @Autowired
     SkillRepository skillRepository;
 
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+
   //Add Person
     @GetMapping("/")
     public String index(Model toSend){
