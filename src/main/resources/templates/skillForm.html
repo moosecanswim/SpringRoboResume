@@ -63,24 +63,25 @@
                                                     class="btn btn-primary"
                                                     th:disabled="${outOfBounds}"
                                                     name="button"
-                                                    value="Save">
+                                                    th:value="${isNew}? 'Save':'Update'">
                                                 <div th:text="${isNew}? 'Save and Generate Resume' : 'Update'"></div>
-                                                <span class="glyphicon glyphicon-thumbs-up">
-
-                                                    </span>
                                             </button>
                                             <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
-                                            <button type="submit"
-                                                    class="btn btn-primary"
-                                                    th:disabled="${outOfBounds} or ${!isNew}"
-                                                    name="button"
-                                                    value="AddAnother">Save and Add Another Skill
-                                                <span class="glyphicon glyphicon-thumbs-up">
+                                            <div th:class="${!isNew}? 'conditional-hidden':'conditional-not-hidden'">
+                                                <button type="submit"
+                                                        class="btn btn-primary"
+                                                        th:disabled="${outOfBounds} or ${!isNew}"
+                                                        name="button"
+                                                        value="AddAnother">
+                                                    <div>Save and Add Another Skill</div>
+                                                </button>
+                                            </div>
 
-                                                    </span>
+                                            <button id="resetButton"
+                                                    type="reset"
+                                                    class="btn btn-primary">
+                                                <div>Clear</div>
                                             </button>
-
-                                            <button id="resetButton" type="reset" class="btn btn-primary">Clear <span class="glyphicon glyphicon-thumbs-down"></span></button>
                                         </div>
                                     </div>
 

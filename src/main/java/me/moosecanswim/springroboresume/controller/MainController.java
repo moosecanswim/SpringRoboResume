@@ -74,7 +74,6 @@ public class MainController {
     @RequestMapping(value="/addeducation", method=POST)
     public String addOneEducation(@Valid @ModelAttribute("anEducation") Education anEducation,
                                   Model toSend, BindingResult result,@RequestParam(value="button") String todo){
-        System.out.println("the button selected said to " + todo);
         //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
         //forces user to enter atleast one education (wont take a blank entry)
         toSend.addAttribute("isNew",false);
@@ -100,7 +99,8 @@ public class MainController {
             case "AddAnother":
                 //save and open a new one
                 return "redirect:/addeducation";
-
+            case "Update":
+                return "redirect:/generateresume";
         }
 
         return "generateresume";//if i go there then i have an error
@@ -134,7 +134,6 @@ public class MainController {
     @RequestMapping(value="/addwork", method=POST)
     public String addOneWork(@Valid @ModelAttribute("aJob") Job aJob,
                              Model toSend, BindingResult result,@RequestParam(value="button") String todo){
-        System.out.println("You're going to add one and move on");
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "workForm";
@@ -143,7 +142,6 @@ public class MainController {
         if(jobRepository.count()>9){
             outOfBounds=true;
         }
-
         toSend.addAttribute("outOfBounds",outOfBounds);
         jobRepository.save(aJob);
 
@@ -156,7 +154,8 @@ public class MainController {
             case "AddAnother":
                 //save and open a new one
                 return "redirect:/addwork";
-
+            case "Update":
+                return "redirect:/generateresume";
         }
 
         return "redirect:/generateresume";
@@ -192,7 +191,6 @@ public class MainController {
     @RequestMapping(value="/addskill", method=POST)
     public String addOneSkill(@Valid @ModelAttribute("aSkill") Skill aSkill,
                               Model toSend, BindingResult result,@RequestParam(value="button") String todo){
-        System.out.println("You're going to add one and move on");
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "skillForm";
@@ -212,7 +210,8 @@ public class MainController {
             case "AddAnother":
                 //save and open a new one
                 return "redirect:/addskill";
-
+            case "Update":
+                return "redirect:/generateresume";
         }
 
         return "redirect:/generateresume";

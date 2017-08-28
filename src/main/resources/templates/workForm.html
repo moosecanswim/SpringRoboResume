@@ -66,6 +66,37 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!--&lt;!&ndash;Start Date 2&ndash;&gt;-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label class="col-md-4 control-label">Start Date</label>-->
+                                        <!--<div class="col-md-4 inputGroupContainer">-->
+                                            <!--<div class="input-group">-->
+                                                <!--<label class="col-md-4 control-label" for="select-month">Month:</label>-->
+                                                <!--<select id="select-month">-->
+                                                    <!--<option value="01">January-->
+                                                    <!--<option value="02">February-->
+                                                    <!--<option value="03">March-->
+                                                    <!--<option value="04">April-->
+                                                    <!--<option value="05">May-->
+                                                    <!--<option value="06">June-->
+                                                    <!--<option value="07">July-->
+                                                    <!--<option value="08">August-->
+                                                    <!--<option value="09">September-->
+                                                    <!--<option value="10">October-->
+                                                    <!--<option value="11">November-->
+                                                    <!--<option value="12">December-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                            <!--<div class="input-group">-->
+                                                <!--<label for="type-year">Year:</label>-->
+                                                <!--<input th:type="text" id="type-year"/><br />-->
+
+                                            <!--</div>-->
+
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+
                                     <!--End Date-->
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">End Date</label>
@@ -108,23 +139,24 @@
                                                     class="btn btn-primary"
                                                     th:disabled="${outOfBounds}"
                                                     name="button"
-                                                    value="Save">
+                                                    th:value="${isNew}? 'Save':'Update'">
                                                 <div th:text="${isNew}? 'Save and Go to Skill' : 'Update'"></div>
-                                                <span class="glyphicon glyphicon-thumbs-up"></span>
                                             </button>
                                             <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
-                                            <button type="submit"
-                                                    class="btn btn-primary"
-                                                    th:disabled="${outOfBounds}  or ${!isNew}"
-                                                    name="button"
-                                                    value="AddAnother">Save and Add Another Job
-                                                <span class="glyphicon glyphicon-thumbs-up"></span>
-                                            </button>
+                                            <div th:class="${!isNew}? 'conditional-hidden':'conditional-not-hidden'">
+                                                <button type="submit"
+                                                        class="btn btn-primary"
+                                                        th:disabled="${outOfBounds}  or ${!isNew}"
+                                                        name="button"
+                                                        value="AddAnother">
+                                                    <div>Save and Add Another Job</div>
+                                                </button>
+                                            </div>
 
                                             <button id="resetButton"
                                                     type="reset"
-                                                    class="btn btn-primary">Clear
-                                                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                                                    class="btn btn-primary">
+                                                <div>Clear</div>
                                             </button>
                                         </div>
                                     </div>
