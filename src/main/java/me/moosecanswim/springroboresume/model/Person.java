@@ -3,12 +3,10 @@ package me.moosecanswim.springroboresume.model;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 public class Person {
@@ -24,9 +22,12 @@ public class Person {
     @Email
     private String email;
 
-    private ArrayList<Job> jobs;
-    private ArrayList<Education> educations;
-    private ArrayList<Skill> skills;
+    @OneToMany(mappedBy="person", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private Set<Education> educations;
+    @OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    private Set<Job> jobs;
+    @OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    private Set<Skill> skills;
 
 
 
@@ -45,29 +46,6 @@ public class Person {
         this.email = email;
     }
 
-    public ArrayList<Job> getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(ArrayList<Job> jobs) {
-        this.jobs = jobs;
-    }
-
-    public ArrayList<Education> getEducations() {
-        return educations;
-    }
-
-    public void setEducations(ArrayList<Education> educations) {
-        this.educations = educations;
-    }
-
-    public ArrayList<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(ArrayList<Skill> skills) {
-        this.skills = skills;
-    }
 
     public long getId() {
         return id;
@@ -83,5 +61,44 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(Set<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    public Set<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(Set<Education> educations) {
+        this.educations = educations;
+    }
+
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<Skill> skills) {
+        this.skills = skills;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%s %s",this.firstName,this.lastName);
+    }
+
+    public void addEducation(Education anEducation){
+        this.getEducations().add(anEducation);
+    }
+    public void addJob(Job ajob){
+        this.getJobs().add(ajob);
+    }
+    public void addSkill(Skill aSkill){
+        this.getSkills().add(aSkill);
     }
 }

@@ -2,10 +2,7 @@ package me.moosecanswim.springroboresume.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -19,6 +16,17 @@ public class Skill {
 
     public String getSkill() {
         return skill;
+    }
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="personId")
+    private Person person;
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public void setSkill(String skill) {

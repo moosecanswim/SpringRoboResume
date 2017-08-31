@@ -2,10 +2,7 @@ package me.moosecanswim.springroboresume.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +21,19 @@ public class Job {
     private String endDate;
     private String duty1;
     private String duty2;
+
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="personId")
+    private Person person;
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
     public String getCompany() {
         return company;

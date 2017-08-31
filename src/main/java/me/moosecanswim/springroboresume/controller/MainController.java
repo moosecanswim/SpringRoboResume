@@ -1,9 +1,6 @@
 package me.moosecanswim.springroboresume.controller;
 
-import me.moosecanswim.springroboresume.model.Education;
-import me.moosecanswim.springroboresume.model.Job;
-import me.moosecanswim.springroboresume.model.Person;
-import me.moosecanswim.springroboresume.model.Skill;
+import me.moosecanswim.springroboresume.model.*;
 import me.moosecanswim.springroboresume.repositories.EducationRepository;
 import me.moosecanswim.springroboresume.repositories.JobRepository;
 import me.moosecanswim.springroboresume.repositories.PersonRepository;
@@ -30,6 +27,8 @@ public class MainController {
     JobRepository jobRepository;
     @Autowired
     SkillRepository skillRepository;
+    @Autowired
+    UserComponent userComponent;
 
     @RequestMapping("/login")
     public String login(){
@@ -51,6 +50,7 @@ public class MainController {
         if(result.hasErrors()){
             return"index";
         }
+        userComponent.setUser(newPerson);
         personRepository.save(newPerson);
         return"startresume";
     }
@@ -59,6 +59,8 @@ public class MainController {
     //Education
     @GetMapping("/addeducation")
     public String addEducation(Model toSend){
+
+        System.out.println("Current user is " + userComponent.getUser().toString());
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("anEducation", new Education());
 
@@ -94,6 +96,7 @@ public class MainController {
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
+
         educationRepository.save(anEducation);
 
         //this determines where we go

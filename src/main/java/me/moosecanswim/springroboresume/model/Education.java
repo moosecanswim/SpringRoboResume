@@ -2,10 +2,7 @@ package me.moosecanswim.springroboresume.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -18,6 +15,13 @@ public class Education  {
     @NotBlank
     private String degree;
     private String graduationDate;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
+    private Person person;
+
+
 
     public String getDegree() {
         return degree;
@@ -52,6 +56,14 @@ public class Education  {
            this.graduationDate = graduationDate;
        }
     }
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
 
     public void setId(long id) {
         this.id = id;
