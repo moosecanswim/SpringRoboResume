@@ -43,7 +43,7 @@ public class MainController {
     //welcome to the roboresume 3000.  please enter a name and email to continue
     //click a button to continue
         toSend.addAttribute("newPerson", new Person());
-
+        toSend.addAttribute("listOfPeople", personRepository.findAll());
         return "index";
     }
     @PostMapping("/")

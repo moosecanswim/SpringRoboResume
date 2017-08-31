@@ -13,6 +13,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
+                .antMatchers("/css/**", "/js/**", "/font-awesome/**", "/fonts/**","/addemployee/**","/addDept/**").permitAll()
                 .antMatchers("/")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
