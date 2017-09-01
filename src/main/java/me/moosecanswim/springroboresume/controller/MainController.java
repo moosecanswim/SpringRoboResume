@@ -112,7 +112,7 @@ public class MainController {
         switch(todo){
             case "Save":
                 //save and move on
-                return "redirect:/addwork";
+                return "redirect:/generateresume";
 
             case "AddAnother":
                 //save and open a new one
@@ -169,7 +169,7 @@ public class MainController {
         switch(todo){
             case "Save":
                 //save and move on
-                return "redirect:/addskill";
+                return "redirect:/generateresume";
 
             case "AddAnother":
                 //save and open a new one

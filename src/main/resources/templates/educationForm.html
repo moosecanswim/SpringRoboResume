@@ -95,7 +95,7 @@
                                                     th:disabled="${outOfBounds}"
                                                     name="button"
                                                     th:value="${isNew}? 'Save':'Update'">
-                                                <div th:text="${isNew}? 'Save and Go to Work Input' : 'Update'"></div>
+                                                <div th:text="${isNew}? 'Add' : 'Update'"></div>
                                             </button>
                                             <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
                                             <div th:class="${!isNew}? 'conditional-hidden':'conditional-not-hidden'">
@@ -104,7 +104,7 @@
                                                         th:disabled="${outOfBounds} or ${!isNew}"
                                                         name="button"
                                                         value="AddAnother">
-                                                    <div> Save and Add Another Education</div>
+                                                    <div>Add Another</div>
                                                 </button>
                                             </div>
 
