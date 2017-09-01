@@ -241,6 +241,7 @@ public class MainController {
 
     @RequestMapping("/updateSkill")
     public String updateEducation(@Valid Skill aSkill, BindingResult result){
+        System.out.println(aSkill.toString());
         if(result.hasErrors()){
             return "skillForm";
         }
