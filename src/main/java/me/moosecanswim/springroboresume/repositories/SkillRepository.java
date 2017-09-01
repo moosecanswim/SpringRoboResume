@@ -8,5 +8,7 @@ import java.util.Set;
 
 public interface SkillRepository extends CrudRepository<Skill,Long> {
     Set<Skill> findByPerson(Person person);
+    Set<Skill> findByPersonAndActive(Person person,Boolean in);
     long countByPerson(Person person);
+    long countByPersonAndActive(Person person,Boolean in);
 }

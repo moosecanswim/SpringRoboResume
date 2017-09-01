@@ -21,7 +21,19 @@ public class Education  {
     @JoinColumn(name = "person_id")
     private Person person;
 
+    private Boolean active;
 
+    public Education(){
+        active=true;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     public String getDegree() {
         return degree;

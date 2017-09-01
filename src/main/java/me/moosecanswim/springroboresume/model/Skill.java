@@ -17,7 +17,21 @@ public class Skill {
     @JoinColumn(name="personId")
     private Person person;
 
+    private Boolean active;
 
+
+    public Skill(){
+        active=true;
+    }
+
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     public Person getPerson() {
         return person;

@@ -29,7 +29,20 @@ public class Person {
     @OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     private Set<Skill> skills;
 
+    private Boolean active;
 
+    public Person(){
+        active=true;
+    }
+
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     public String getFirstName() {
         return firstName;

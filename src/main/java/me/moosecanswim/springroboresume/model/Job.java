@@ -22,10 +22,24 @@ public class Job {
     private String duty1;
     private String duty2;
 
-
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="personId")
     private Person person;
+
+
+    public Job(){
+        active=true;
+    }
+
+    private Boolean active;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     public Person getPerson() {
         return person;

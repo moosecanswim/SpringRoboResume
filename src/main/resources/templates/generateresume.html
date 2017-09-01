@@ -51,6 +51,7 @@
                                     <div th:each="i:${myEducation}" class="panel-body">
                                         <p th:inline="text"><strong>[[${i.degree}]]</strong>, </p>
                                         <p th:inline="text">[[${i.school}]], [[${i.graduationDate}]] </p>
+                                        <p th:inline="text">Status: [[${i.active}]]</p>
                                         <p><a th:href="@{/update/education/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/education/{id}  (id=${i.id})}">Delete</a></p>
 
                                     </div>
@@ -78,7 +79,7 @@
                                         <p th:inline="text">[[${i.company}]], [[${i.startDate}]] - [[${i.endDate}]]</p>
                                         <p th:inline="text"> -Duty 1: [[${i.duty1}]]</p>
                                         <p th:inline="text"> -Duty 2: [[${i.duty2}]]</p>
-
+                                        <p th:inline="text">Status: [[${i.active}]]</p>
                                         <p><a th:href="@{/update/work/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/work/{id}  (id=${i.id})}">Delete</a></p>
 
                                     </div>
@@ -106,6 +107,7 @@
 
                                     <div th:each="i:${mySkills}" class="panel-body">
                                         <p th:inline="text"><strong>[[${i.skillName}]]</strong>: [[${i.rating}]]</p>
+                                        <p th:inline="text">Status: [[${i.active}]]</p>
                                         <p><a th:href="@{/update/skill/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/skill/{id}  (id=${i.id})}">Delete</a></p>
                                     </div>
                                     <div class="center">

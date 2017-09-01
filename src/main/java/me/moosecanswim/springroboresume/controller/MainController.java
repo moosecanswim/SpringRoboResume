@@ -36,11 +36,11 @@ public class MainController {
     }
 
 
-  //Add Person
+    //Add Person
     @GetMapping("/")
     public String index(Model toSend){
-    //welcome to the roboresume 3000.  please enter a name and email to continue
-    //click a button to continue
+        //welcome to the roboresume 3000.  please enter a name and email to continue
+        //click a button to continue
         toSend.addAttribute("newPerson", new Person());
         toSend.addAttribute("listOfPeople", personRepository.findAll());
         return "index";
@@ -67,18 +67,18 @@ public class MainController {
     //Education
     @GetMapping("/addeducation")
     public String addEducation(Model toSend){
-
-        System.out.println("Current user is " + userComponent.getUser().toString());
+        Person myPerson = userComponent.getUser();
+        System.out.println("Current user is " + myPerson.toString());
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("anEducation", new Education());
 
-        toSend.addAttribute("educationCount",(educationRepository.count()+1));
+        toSend.addAttribute("educationCount",(educationRepository.countByPersonAndActive(myPerson,true)+1));
 
         Boolean outOfBounds=false;
-        if(educationRepository.count()>9){
+        if(educationRepository.countByPersonAndActive(myPerson,true)>9){
             outOfBounds=true;
         }
-        System.out.println("education repo has " + educationRepository.count() + " enteries");
+        System.out.println("education repo has " + educationRepository.countByPersonAndActive(myPerson,true) + " enteries");
         System.out.println(outOfBounds);
         toSend.addAttribute("outOfBounds",outOfBounds);
 
@@ -92,6 +92,7 @@ public class MainController {
                                   Model toSend, BindingResult result,@RequestParam(value="button") String todo){
         //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
         //forces user to enter atleast one education (wont take a blank entry)
+        Person myPerson=userComponent.getUser();
         toSend.addAttribute("isNew",false);
         if(!anEducation.acceptEducation()){
             return "redirect:/addeducation";
@@ -100,12 +101,12 @@ public class MainController {
             return "educationForm";
         }
         Boolean outOfBounds=false;
-        if(educationRepository.count()>9){
+        if(educationRepository.countByPersonAndActive(myPerson,true)>9){
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
-        anEducation.setPerson(userComponent.getUser());
-        personRepository.findOne(userComponent.getUser().getId()).addEducation(anEducation);
+        anEducation.setPerson(myPerson);
+        personRepository.findOne(myPerson.getId()).addEducation(anEducation);
         educationRepository.save(anEducation);
 
         //this determines where we go
@@ -136,12 +137,13 @@ public class MainController {
     //Work
     @GetMapping("/addwork")
     public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson){
+        Person myPerson=userComponent.getUser();
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("aJob", new Job());
-        toSend.addAttribute("jobCount",(jobRepository.count()+1));
+        toSend.addAttribute("jobCount",(jobRepository.countByPersonAndActive(myPerson,true)+1));
 
         Boolean outOfBounds=false;
-        if(jobRepository.count()>9){
+        if(jobRepository.countByPersonAndActive(myPerson,true)>9){
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
@@ -152,17 +154,18 @@ public class MainController {
     @RequestMapping(value="/addwork", method=POST)
     public String addOneWork(@Valid @ModelAttribute("aJob") Job aJob,
                              Model toSend, BindingResult result,@RequestParam(value="button") String todo){
+        Person myPerson = userComponent.getUser();
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "workForm";
         }
         Boolean outOfBounds=false;
-        if(jobRepository.count()>9){
+        if(jobRepository.countByPersonAndActive(myPerson,true)>9){
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
-        aJob.setPerson(userComponent.getUser());
-        personRepository.findOne(userComponent.getUser().getId()).addJob(aJob);
+        aJob.setPerson(myPerson);
+        personRepository.findOne(myPerson.getId()).addJob(aJob);
         jobRepository.save(aJob);
 
         //this determines where we go
@@ -183,9 +186,11 @@ public class MainController {
 
     @RequestMapping("/updateWork")
     public String updateEducation(@Valid Job aJob, BindingResult result){
+        //Person myPerson=userComponent.getUser();
         if(result.hasErrors()){
             return "workForm";
         }
+        //personRepository.findOne(myPerson.getId()).addJob(aJob);
         jobRepository.save(aJob);
         return "redirect:/generateresume";
     }
@@ -194,13 +199,13 @@ public class MainController {
     //Skills
     @GetMapping("/addskill")
     public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson){
-
+        Person myPerson=userComponent.getUser();
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("aSkill", new Skill());
 
-        toSend.addAttribute("skillCount", (skillRepository.count()+1));
+        toSend.addAttribute("skillCount", (skillRepository.countByPersonAndActive(myPerson,true)+1));
         Boolean outOfBounds=false;
-        if(skillRepository.count()>19){
+        if(skillRepository.countByPersonAndActive(myPerson,true)>19){
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
@@ -211,17 +216,18 @@ public class MainController {
     @RequestMapping(value="/addskill", method=POST)
     public String addOneSkill(@Valid @ModelAttribute("aSkill") Skill aSkill,
                               Model toSend, BindingResult result,@RequestParam(value="button") String todo){
+        Person myPerson=userComponent.getUser();
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "skillForm";
         }
         Boolean outOfBounds=false;
-        if(skillRepository.count()>19){
+        if(skillRepository.countByPersonAndActive(myPerson,true)>19){
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
-        aSkill.setPerson(userComponent.getUser());
-        personRepository.findOne(userComponent.getUser().getId()).addSkill(aSkill);
+        aSkill.setPerson(myPerson);
+        personRepository.findOne(myPerson.getId()).addSkill(aSkill);
         skillRepository.save(aSkill);
         //this determines where we go
         switch(todo){
@@ -245,7 +251,7 @@ public class MainController {
         if(result.hasErrors()){
             return "skillForm";
         }
-       skillRepository.save(aSkill);
+        skillRepository.save(aSkill);
         return "redirect:/generateresume";
     }
 
@@ -261,9 +267,9 @@ public class MainController {
         toSend.addAttribute("myPerson",myPeep);//for the name entry
 
 
-        long eduCount=educationRepository.countByPerson(myPeep);
-        long jobCount=jobRepository.countByPerson(myPeep);
-        long skillCount=skillRepository.countByPerson(myPeep);
+        long eduCount=educationRepository.countByPersonAndActive(myPeep,true);
+        long jobCount=jobRepository.countByPersonAndActive(myPeep,true);
+        long skillCount=skillRepository.countByPersonAndActive(myPeep,true);
         toSend.addAttribute("eduCount",eduCount);
         toSend.addAttribute("jobCount",jobCount);
         toSend.addAttribute("skillCount",skillCount);
@@ -308,11 +314,11 @@ public class MainController {
 
 
         //send all repositories
-        Iterable<Education> learnz = educationRepository.findByPerson(userComponent.getUser());
+        Iterable<Education> learnz = educationRepository.findByPersonAndActive(myPeep,true);
         toSend.addAttribute("myEducation", learnz);
-        Iterable<Job> workz = jobRepository.findByPerson(userComponent.getUser());
+        Iterable<Job> workz = jobRepository.findByPersonAndActive(myPeep,true);
         toSend.addAttribute("myWork", workz);
-        Iterable<Skill> skillz = skillRepository.findByPerson(userComponent.getUser());
+        Iterable<Skill> skillz = skillRepository.findByPersonAndActive(myPeep,true);
         toSend.addAttribute("mySkills",skillz);
 
 
@@ -320,7 +326,7 @@ public class MainController {
     }
 
 
-//Additional Services (update and delete)
+    //Additional Services (update and delete)
     @RequestMapping("/update/{type}/{id}")
     public String update(@PathVariable("type") String type, @PathVariable("id") long id, Model toSend){
         String output=null;
@@ -345,19 +351,33 @@ public class MainController {
         return output;
 
     }
-
+    //actually archives education work and skill traits and removes it from the person's set
     @RequestMapping("/delete/{type}/{id}")
     public String delete(@PathVariable("type") String type,@PathVariable("id") long id){
+        Person myPerson = userComponent.getUser();
         switch(type){
             case "education":
-                educationRepository.delete(id);
-            break;
+                Education tempEducation=educationRepository.findOne(id);
+
+                myPerson.getEducations().remove(tempEducation);
+                tempEducation.setActive(false);
+                educationRepository.save(tempEducation);
+                break;
             case "work":
-                jobRepository.delete(id);
-            break;
+                Job tempJob=jobRepository.findOne(id);
+
+                //myPerson.getJobs().remove(tempJob);
+                tempJob.setActive(false);
+                jobRepository.save(tempJob);
+                break;
             case "skill":
-                skillRepository.delete(id);
-            break;
+                System.out.println("deleteing skill");
+                Skill tempSkill=skillRepository.findOne(id);
+
+                myPerson.getSkills().remove(tempSkill);
+                tempSkill.setActive(false);
+                skillRepository.save(tempSkill);
+                break;
         }
         return "redirect:/generateresume";
     }
