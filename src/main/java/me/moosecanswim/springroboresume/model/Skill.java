@@ -11,15 +11,13 @@ public class Skill {
     @Id
     private long id;
     @NotBlank
-    private String skill;
+    private String skillName;
     private String rating;
-
-    public String getSkill() {
-        return skill;
-    }
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="personId")
     private Person person;
+
+
 
     public Person getPerson() {
         return person;
@@ -28,9 +26,12 @@ public class Skill {
     public void setPerson(Person person) {
         this.person = person;
     }
+    public String getSkillName() {
+        return skillName;
+    }
 
-    public void setSkill(String skill) {
-        this.skill = skill;
+    public void setSkillName(String skillName) {
+        this.skillName = skillName;
     }
 
     public String getRating() {
@@ -51,7 +52,7 @@ public class Skill {
 
     public boolean acceptSkill(){
         boolean output=true;
-        if(getSkill().isEmpty()){
+        if(getSkillName().isEmpty()){
             output=false;
         }
         //add any more constraints here
@@ -60,4 +61,13 @@ public class Skill {
 
     }
 
+    @Override
+    public String toString() {
+        return "Skill{" +
+                "id=" + id +
+                ", skill='" + skillName + '\'' +
+                ", rating='" + rating + '\'' +
+                ", person=" + person +
+                '}';
+    }
 }

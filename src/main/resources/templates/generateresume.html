@@ -105,7 +105,7 @@
                                     </div>
 
                                     <div th:each="i:${mySkills}" class="panel-body">
-                                        <p th:inline="text"><strong>[[${i.skill}]]</strong>: [[${i.rating}]]</p>
+                                        <p th:inline="text"><strong>[[${i.skillName}]]</strong>: [[${i.rating}]]</p>
                                         <p><a th:href="@{/update/skill/{id}  (id=${i.id})}">Update</a> - <a th:href="@{/delete/skill/{id}  (id=${i.id})}">Delete</a></p>
                                     </div>
                                     <div class="center">
