@@ -46,15 +46,23 @@ public class MainController {
         return "index";
     }
     @PostMapping("/")
-    public String index(@Valid @ModelAttribute("newPerson") Person newPerson,Model toSend,BindingResult result){
+    public String index(@Valid @ModelAttribute("newPerson") Person newPerson,
+                        Model toSend,BindingResult result){
+
         if(result.hasErrors()){
             return"index";
         }
+
         userComponent.setUser(newPerson);
         personRepository.save(newPerson);
         return"startresume";
     }
-
+    @RequestMapping("/selectUser/{id}")
+    public String selectOldUser(@PathVariable("id") long oldUserId){
+        System.out.println("User id is: " + oldUserId);
+        userComponent.setUser(personRepository.findOne(oldUserId));
+        return "redirect:/generateresume";
+    }
 
     //Education
     @GetMapping("/addeducation")
@@ -96,7 +104,8 @@ public class MainController {
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
-
+        anEducation.setPerson(userComponent.getUser());
+        personRepository.findOne(userComponent.getUser().getId()).addEducation(anEducation);
         educationRepository.save(anEducation);
 
         //this determines where we go
@@ -152,6 +161,8 @@ public class MainController {
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
+        aJob.setPerson(userComponent.getUser());
+        personRepository.findOne(userComponent.getUser().getId()).addJob(aJob);
         jobRepository.save(aJob);
 
         //this determines where we go
@@ -209,6 +220,8 @@ public class MainController {
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
+        aSkill.setPerson(userComponent.getUser());
+        personRepository.findOne(userComponent.getUser().getId()).addSkill(aSkill);
         skillRepository.save(aSkill);
         //this determines where we go
         switch(todo){
@@ -243,13 +256,13 @@ public class MainController {
     @GetMapping("/generateresume")
     public String generateResume(Model toSend, @ModelAttribute("newPerson") Person newPerson){
 
-        Person myPeep = personRepository.findById(1);
+        Person myPeep = userComponent.getUser();
         toSend.addAttribute("myPerson",myPeep);//for the name entry
 
 
-        long eduCount=educationRepository.count();
-        long jobCount=jobRepository.count();
-        long skillCount=skillRepository.count();
+        long eduCount=educationRepository.countByPerson(myPeep);
+        long jobCount=jobRepository.countByPerson(myPeep);
+        long skillCount=skillRepository.countByPerson(myPeep);
         toSend.addAttribute("eduCount",eduCount);
         toSend.addAttribute("jobCount",jobCount);
         toSend.addAttribute("skillCount",skillCount);
@@ -294,11 +307,11 @@ public class MainController {
 
 
         //send all repositories
-        Iterable<Education> learnz = educationRepository.findAll();
+        Iterable<Education> learnz = educationRepository.findByPerson(userComponent.getUser());
         toSend.addAttribute("myEducation", learnz);
-        Iterable<Job> workz = jobRepository.findAll();
+        Iterable<Job> workz = jobRepository.findByPerson(userComponent.getUser());
         toSend.addAttribute("myWork", workz);
-        Iterable<Skill> skillz = skillRepository.findAll();
+        Iterable<Skill> skillz = skillRepository.findByPerson(userComponent.getUser());
         toSend.addAttribute("mySkills",skillz);
 
 
@@ -347,6 +360,7 @@ public class MainController {
         }
         return "redirect:/generateresume";
     }
+
 
 
 

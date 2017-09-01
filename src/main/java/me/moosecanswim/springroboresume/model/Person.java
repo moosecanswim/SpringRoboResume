@@ -93,12 +93,12 @@ public class Person {
     }
 
     public void addEducation(Education anEducation){
-        this.getEducations().add(anEducation);
+        this.educations.add(anEducation);
     }
     public void addJob(Job ajob){
-        this.getJobs().add(ajob);
+        this.jobs.add(ajob);
     }
     public void addSkill(Skill aSkill){
-        this.getSkills().add(aSkill);
+        this.skills.add(aSkill);
     }
 }

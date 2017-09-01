@@ -19,6 +19,8 @@
                         <!--Enter page content here -->
                         <div class="container">
 
+                            <h3>Choose a user from the list or enter a new user to start another resume</h3>
+
                             <div class="panel panel-default">
                                 <div class="panel-header"><h3>List of Users</h3></div>
                                 <div class="panel-body">
@@ -35,7 +37,7 @@
                                             <td th:text="*{p.firstName}"></td>
                                             <td th:text="*{p.lastName}"></td>
                                             <td th:text="*{p.email}"></td>
-                                            <!--<td><a th:href="@{/generateresume/{id} (id=${p.id})}">View/ Update Resume</a></td>-->
+                                            <td><a th:href="@{/selectUser/{userId} (userId=*{p.id})}">View/ Update Resume</a></td>
                                         </tr>
 
                                     </table>
