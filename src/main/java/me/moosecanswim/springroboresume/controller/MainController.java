@@ -36,27 +36,55 @@ public class MainController {
     }
 
 
-    //Add Person
+    //Welcome Home
     @GetMapping("/")
     public String index(Model toSend){
         //welcome to the roboresume 3000.  please enter a name and email to continue
         //click a button to continue
-        toSend.addAttribute("newPerson", new Person());
+        //toSend.addAttribute("newPerson", new Person());
         toSend.addAttribute("listOfPeople", personRepository.findAll());
         return "index";
     }
-    @PostMapping("/")
-    public String index(@Valid @ModelAttribute("newPerson") Person newPerson,
-                        Model toSend,BindingResult result){
+//    @PostMapping("/")
+//    public String index(@Valid @ModelAttribute("newPerson") Person newPerson,
+//                        Model toSend,BindingResult result){
+//
+//        if(result.hasErrors()){
+//            return"index";
+//        }
+//
+//        userComponent.setUser(newPerson);
+//        personRepository.save(newPerson);
+//        return"startresume";
+//    }
+    @GetMapping("/newPerson")
+    public String newUser(Model toSend){
+        toSend.addAttribute("isNew",true);
+        toSend.addAttribute("newPerson", new Person());
+        toSend.addAttribute("listOfPeople", personRepository.findAll());
+        return "formPerson";
+    }
+    @PostMapping("/newPerson")
+    public String newUser2(@Valid @ModelAttribute("newPerson") Person newPerson,
+                           Model toSend,BindingResult result){
 
         if(result.hasErrors()){
-            return"index";
+            return"formPerson";
         }
-
         userComponent.setUser(newPerson);
         personRepository.save(newPerson);
         return"startresume";
     }
+
+    @RequestMapping("/updatePerson")
+    public String updatePerson(@Valid Person aPerson,BindingResult result){
+        if(result.hasErrors()){
+            return "formUser";
+        }
+        personRepository.save(aPerson);
+        return"redirect:/generateresume";
+    }
+
     @RequestMapping("/selectUser/{id}")
     public String selectOldUser(@PathVariable("id") long oldUserId){
         System.out.println("User id is: " + oldUserId);
@@ -347,6 +375,10 @@ public class MainController {
                 toSend.addAttribute("aSkill",skillRepository.findOne(id));
                 output= "skillForm";
                 break;
+            case "person":
+                toSend.addAttribute("newPerson",personRepository.findOne(id));
+                output="formPerson";
+                break;
         }
         return output;
 
@@ -359,7 +391,7 @@ public class MainController {
             case "education":
                 Education tempEducation=educationRepository.findOne(id);
 
-                myPerson.getEducations().remove(tempEducation);
+                //myPerson.getEducations().remove(tempEducation);
                 tempEducation.setActive(false);
                 educationRepository.save(tempEducation);
                 break;
@@ -374,7 +406,7 @@ public class MainController {
                 System.out.println("deleteing skill");
                 Skill tempSkill=skillRepository.findOne(id);
 
-                myPerson.getSkills().remove(tempSkill);
+                //myPerson.getSkills().remove(tempSkill);
                 tempSkill.setActive(false);
                 skillRepository.save(tempSkill);
                 break;

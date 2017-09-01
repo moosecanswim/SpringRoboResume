@@ -20,6 +20,7 @@
                             <div class="center">
                                 <h1 th:inline="text">[[${myPerson.firstName}]] [[${myPerson.lastName}]]'s New Resume</h1>
                                 <h2 th:inline="text">[[${myPerson.email}]]</h2>
+                                <p><a th:href="@{/update/person/{id} (id=${myPerson.id})}">Update contact info</a></p>
                             </div>
 
                             <!--&lt;!&ndash;test panel&ndash;&gt;-->
