@@ -18,7 +18,7 @@
                         <div class="container" boarder="1px">
                             <form class="well form-horizontal"
                                   action="#"
-                                  th:action="@{/addskill}"
+                                  th:action="${isNew}? @{/addskill}:@{/updateSkill}"
                                   th:object="${aSkill}"
                                   method="post">
                                 <fieldset>
@@ -31,6 +31,7 @@
 
                                     <!--hidden-->
                                     <input type="hidden" th:field="*{id}">
+                                    <input type="hidden" th:field="*{person}">
 
                                     <!--skill-->
                                     <div class="form-group">

@@ -20,7 +20,7 @@
                         <div class="container" boarder="1px">
                             <form  class="well form-horizontal"
                                    action="#"
-                                   th:action="@{/addwork}"
+                                   th:action="${isNew}? @{/addwork}:@{/updateWork}"
                                    th:object="${aJob}"
                                    method="post">
                                 <fieldset>
@@ -32,6 +32,7 @@
 
                                     <!--hidden-->
                                     <input type="hidden" th:field="*{id}">
+                                    <input type="hidden" th:field="*{person}">
 
                                     <!--Company-->
                                     <div class="form-group">
