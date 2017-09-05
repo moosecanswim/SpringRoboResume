@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add Course</title>
+    <th:block th:replace="base::header2"></th:block>
+</head>
+
+<body id="page-top">
+    <th:block th:replace="base::navigation2"></th:block>
+
+    <div id="wrapper">
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="container" boarder="1px">
+                            <form class="well form-horizontal"
+                                  action="#"
+                                  th:action="${isNew}? @{/addCourse}:@{/updateCourse}"
+                                  th:object="${aCourse}"
+                                  method="post">
+                                <fieldset>
+                                    <legend th:text="${isNew}? 'Add Course' : 'Update Course'"></legend>
+
+                                    <!--<div th:if="${isNew}">-->
+                                        <!--<p><strong th:text="${skillCount}"></strong>/20</p>-->
+                                    <!--</div>-->
+
+
+                                    <!--hidden id and status-->
+                                    <input type="hidden" th:field="*{id}">
+                                    <!--<input type="hidden" th:field="*{person}">-->
+                                    <input type="hidden" th:field="*{active}">
+
+                                    <!--course Name-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Course Name</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input th:type="text" th:field="*{courseName}"/> <br />
+                                                <span th:if="${#fields.hasErrors('courseName')}"
+                                                      th:errors="*{courseName}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--course Description-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Course Description</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <textarea th:field="*{courseDescription}" rows="4" cols="50"></textarea>
+                                                <span th:if="${#fields.hasErrors('courseDescription')}"
+                                                      th:errors="*{courseDescription}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--credit hours-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Credit Hours</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <input th:type="text" th:field="*{courseCreditHours}"/><br />
+                                                <span th:if="${#fields.hasErrors('courseCreditHours')}"
+                                                      th:errors="*{courseCreditHours}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--course days-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Course Meeting Days</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <select th:field="*{courseDays}">
+                                                    <option value="">Select Course Days</option>
+                                                    <option value="M,W">M,W</option>
+                                                    <option value="M,W,F">M,W,F</option>
+                                                    <option value="T,R">T,R</option>
+                                                </select>
+                                                <span th:if="${#fields.hasErrors('courseDays')}"
+                                                      th:errors="*{courseDays}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--course Start Time-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Course Start Time:</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <select name="courseStartHours">
+                                                    <option value="00" disabled>0</option>
+                                                    <option value="01" disabled>1</option>
+                                                    <option value="02" disabled>2</option>
+                                                    <option value="03" disabled>3</option>
+                                                    <option value="04" disabled>4</option>
+                                                    <option value="05" disabled>5</option>
+                                                    <option value="06">6</option>
+                                                    <option value="07">7</option>
+                                                    <option value="08">8</option>
+                                                    <option value="09">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                    <option value="13">13</option>
+                                                    <option value="14">14</option>
+                                                    <option value="15">15</option>
+                                                    <option value="16">16</option>
+                                                    <option value="17">17</option>
+                                                    <option value="18">18</option>
+                                                    <option value="19">19</option>
+                                                    <option value="20">20</option>
+                                                    <option value="21" disabled>21</option>
+                                                    <option value="22" disabled>22</option>
+                                                    <option value="23" disabled>23</option>
+                                                    <option value="24" disabled>24</option>
+                                                </select>
+                                                <select name="courseStartMin">
+                                                    <option th:value="00">00</option>
+                                                    <option th:value="05">05</option>
+                                                    <option th:value="10">10</option>
+                                                    <option th:value="15">15</option>
+                                                    <option th:value="20">20</option>
+                                                    <option th:value="25">25</option>
+                                                    <option th:value="30">30</option>
+                                                    <option th:value="35">35</option>
+                                                    <option th:value="40">40</option>
+                                                    <option th:value="45">45</option>
+                                                    <option th:value="50">50</option>
+                                                    <option th:value="55">55</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--buttons-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label"></label>
+                                        <div class="col-md-4">
+                                            <button type="submit"
+                                                    class="btn btn-primary"
+                                                    name="button"
+                                                    th:value="${isNew}? 'Save':'Update'">
+                                                <div th:text="${isNew}?  'Add':'Update'"></div>
+                                            </button>
+                                            <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
+                                            <div th:class="${!isNew}? 'conditional-hidden':'conditional-not-hidden'">
+                                                <button type="submit"
+                                                        class="btn btn-primary"
+                                                        th:disabled="${!isNew}"
+                                                        name="button"
+                                                        value="AddAnother">
+                                                    <div>Add Another</div>
+                                                </button>
+                                            </div>
+
+                                            <button id="resetButton"
+                                                    type="reset"
+                                                    class="btn btn-primary">
+                                                <div>Clear</div>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <th:block th:replace="base::footer2"></th:block>
+</body>
+
+</html>

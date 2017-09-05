@@ -1,10 +1,7 @@
 package me.moosecanswim.springroboresume.controller;
 
 import me.moosecanswim.springroboresume.model.*;
-import me.moosecanswim.springroboresume.repositories.EducationRepository;
-import me.moosecanswim.springroboresume.repositories.JobRepository;
-import me.moosecanswim.springroboresume.repositories.PersonRepository;
-import me.moosecanswim.springroboresume.repositories.SkillRepository;
+import me.moosecanswim.springroboresume.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +24,8 @@ public class MainController {
     JobRepository jobRepository;
     @Autowired
     SkillRepository skillRepository;
+    @Autowired
+    CourseRepository courseRepository;
     @Autowired
     UserComponent userComponent;
 
@@ -378,6 +377,16 @@ public class MainController {
             case "person":
                 toSend.addAttribute("newPerson",personRepository.findOne(id));
                 output="formPerson";
+                break;
+            case "course":
+                Course aCourse=courseRepository.findOne(id);
+                String tempTime=aCourse.getCourseStartTime();
+                String hour=tempTime.substring(0,1);
+                String min=tempTime.substring(3,4);
+                toSend.addAttribute("courseStartHour",hour);
+                toSend.addAttribute("courseStartMin",min);
+                toSend.addAttribute("aCourse",aCourse);
+                output="formCourse";
                 break;
         }
         return output;

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -29,10 +30,14 @@ public class Person {
     @OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     private Set<Skill> skills;
 
+    @ManyToMany
+    private Set<Course> courses;
+
     private Boolean active;
 
     public Person(){
         active=true;
+        this.courses=new HashSet<Course>();
     }
 
 

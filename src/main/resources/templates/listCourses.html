@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>List All Courses</title>
+    <!--<th:block th:replace="base::header"></th:block>-->
+    <th:block th:replace="base::header2"></th:block>
+</head>
+
+<body>
+    <!--<th:block th:replace="base::navigation"></th:block>-->
+    <th:block th:replace="base::navigation2"></th:block>
+
+    <div id="wrapper">
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!--Enter page content here -->
+                        <div class="container">
+
+                            <h3>All Courses</h3>
+
+                            <div class="panel panel-default">
+                                <div class="panel-header"><h3>List of courses</h3></div>
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>CRM (Id)</th>
+                                            <th>Name</th>
+                                            <th>Credit Hours</th>
+                                            <th>Meeting Days</th>
+                                            <th>Meeting Time</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        <tr th:each="c:${listCourses}">
+                                            <td th:text="*{c.id}"></td>
+                                            <td th:text="*{c.courseName}"></td>
+                                            <td th:text="*{c.courseCreditHours}"></td>
+                                            <td th:text="*{c.courseDays}"></td>
+                                            <td th:text="*{c.courseStartTime}"></td>
+                                            <td th:text="*{c.courseDescription}"></td>
+                                            <td><a href="/showCourses">Add Students</a>
+                                                -
+                                                <a th:href="@{/update/course/{id} (id=*{c.id})}">Update</a>
+                                                -
+                                                <a href="/showCourses">Delete</a>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                                <div class="panel-footer">
+                                    <form action="#"
+                                          th:action="@{/addCourse}"
+                                          method="get">
+
+                                        <!--Submit and clear buttons-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label"></label>
+                                            <div class="col-md-4">
+                                                <button id="submitButton" type="submit" class="btn btn-primary">Add another Course</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!--toggle switch-->
+                            <!--<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block th:replace="base::footer2"></th:block>
+</body>
+
+</html>
