@@ -41,11 +41,11 @@
                                             <td th:text="*{c.courseDays}"></td>
                                             <td th:text="*{c.courseStartTime}"></td>
                                             <td th:text="*{c.courseDescription}"></td>
-                                            <td><a href="/showCourses">Add Students</a>
+                                            <td><a th:href="@{/course/coursepage/{id} (id=*{c.id})}">Course Page</a>
                                                 -
-                                                <a th:href="@{/update/course/{id} (id=*{c.id})}">Update</a>
+                                                <a th:href="@{/course/update/{id} (id=*{c.id})}">Update</a>
                                                 -
-                                                <a href="/showCourses">Delete</a>
+                                                <a th:href="@{/course/delete/{id} (id=*{c.id})}">Delete</a>
                                             </td>
                                         </tr>
 
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="panel-footer">
                                     <form action="#"
-                                          th:action="@{/addCourse}"
+                                          th:action="@{/course/add}"
                                           method="get">
 
                                         <!--Submit and clear buttons-->

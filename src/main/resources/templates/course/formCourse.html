@@ -18,7 +18,7 @@
                         <div class="container" boarder="1px">
                             <form class="well form-horizontal"
                                   action="#"
-                                  th:action="${isNew}? @{/addCourse}:@{/updateCourse}"
+                                  th:action="${isNew}? @{/course/add}:@{/updateCourse}"
                                   th:object="${aCourse}"
                                   method="post">
                                 <fieldset>

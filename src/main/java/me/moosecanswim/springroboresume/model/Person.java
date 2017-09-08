@@ -14,7 +14,6 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
-
     @NotBlank
     private String firstName;
     @NotBlank
@@ -22,22 +21,25 @@ public class Person {
     @NotBlank
     @Email
     private String email;
-
     @OneToMany(mappedBy="person", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Education> educations;
     @OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     private Set<Job> jobs;
     @OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
     private Set<Skill> skills;
-
     @ManyToMany
     private Set<Course> courses;
-
     private Boolean active;
+    @ManyToMany(fetch=FetchType.EAGER)
+    private Set<Role> roles;
+    @OneToMany(mappedBy="recruiter",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    private Set<PostedJob> postedJobs;
+
 
     public Person(){
         active=true;
         this.courses=new HashSet<Course>();
+        this.roles=new HashSet<Role>();
     }
 
 
@@ -118,5 +120,26 @@ public class Person {
     }
     public void addSkill(Skill aSkill){
         this.skills.add(aSkill);
+    }
+
+    public void addRole(Role r){
+        System.out.println("Adding role: " + r.getRole());
+        this.roles.add(r);
+    }
+    public void removeRole(Role r){
+        System.out.println("Removing role: " + r.getRole());
+        this.roles.remove(r);
+    }
+
+
+    public Set<PostedJob> getPostedJobs() {
+        return postedJobs;
+    }
+
+    public void setPostedJobs(Set<PostedJob> postedJobs) {
+        this.postedJobs = postedJobs;
+    }
+    public void addPostedJob(PostedJob postedJob){
+        this.postedJobs.add(postedJob);
     }
 }

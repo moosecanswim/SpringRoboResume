@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Recruiter Home</title>
+    <th:block th:replace="base::header2"></th:block>
+</head>
+<body>
+    <th:block th:replace="base::navigation2"></th:block>
+    <div id="wrapper">
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Recruiter Home</h1>
+
+                        <h3>Show a list of posted by this recruiter jobs here</h3>
+                        <h4>button to show all posted jobs</h4>
+
+                        <form action="/recruiter/addjob">
+                            <!--buttons-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-4">
+                                    <button id="submitButton" type="submit" class="btn btn-primary">Add Job<span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block th:replace="base::footer2"></th:block>
+</body>
+</html>

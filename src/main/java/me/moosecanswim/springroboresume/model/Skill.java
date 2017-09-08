@@ -16,7 +16,9 @@ public class Skill {
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="personId")
     private Person person;
-
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="requiredSkills")
+    private PostedJob postedJob;
     private Boolean active;
 
 
@@ -83,5 +85,13 @@ public class Skill {
                 ", rating='" + rating + '\'' +
                 ", person=" + person +
                 '}';
+    }
+
+    public PostedJob getPostedJob() {
+        return postedJob;
+    }
+
+    public void setPostedJob(PostedJob postedJob) {
+        this.postedJob = postedJob;
     }
 }

@@ -27,6 +27,8 @@ public class MainController {
     @Autowired
     CourseRepository courseRepository;
     @Autowired
+    RoleRepository roleRepository;
+    @Autowired
     UserComponent userComponent;
 
     @RequestMapping("/login")
@@ -38,47 +40,36 @@ public class MainController {
     //Welcome Home
     @GetMapping("/")
     public String index(Model toSend){
-        //welcome to the roboresume 3000.  please enter a name and email to continue
-        //click a button to continue
-        //toSend.addAttribute("newPerson", new Person());
+        if(roleRepository.count()<1){
+            addDefaults();
+        }
         toSend.addAttribute("listOfPeople", personRepository.findAll());
         return "index";
     }
-//    @PostMapping("/")
-//    public String index(@Valid @ModelAttribute("newPerson") Person newPerson,
-//                        Model toSend,BindingResult result){
-//
-//        if(result.hasErrors()){
-//            return"index";
-//        }
-//
-//        userComponent.setUser(newPerson);
-//        personRepository.save(newPerson);
-//        return"startresume";
-//    }
+
     @GetMapping("/newPerson")
     public String newUser(Model toSend){
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("newPerson", new Person());
         toSend.addAttribute("listOfPeople", personRepository.findAll());
-        return "formPerson";
+        return "elements/formPerson";
     }
     @PostMapping("/newPerson")
     public String newUser2(@Valid @ModelAttribute("newPerson") Person newPerson,
                            Model toSend,BindingResult result){
 
         if(result.hasErrors()){
-            return"formPerson";
+            return"elements/formPerson";
         }
         userComponent.setUser(newPerson);
         personRepository.save(newPerson);
-        return"startresume";
+        return"elements/startresume";
     }
 
     @RequestMapping("/updatePerson")
     public String updatePerson(@Valid Person aPerson,BindingResult result){
         if(result.hasErrors()){
-            return "formUser";
+            return "elements/formPerson";
         }
         personRepository.save(aPerson);
         return"redirect:/generateresume";
@@ -109,7 +100,7 @@ public class MainController {
         System.out.println(outOfBounds);
         toSend.addAttribute("outOfBounds",outOfBounds);
 
-        return "educationForm";
+        return "elements/educationForm";
     }
 
     //Save Education and move to Work
@@ -125,7 +116,7 @@ public class MainController {
             return "redirect:/addeducation";
         }
         if(result.hasErrors()){
-            return "educationForm";
+            return "elements/educationForm";
         }
         Boolean outOfBounds=false;
         if(educationRepository.countByPersonAndActive(myPerson,true)>9){
@@ -155,7 +146,7 @@ public class MainController {
     @RequestMapping("/updateEducation")
     public String updateEducation(@Valid Education anEducation, BindingResult result){
         if(result.hasErrors()){
-            return "educationForm";
+            return "elements/educationForm";
         }
         educationRepository.save(anEducation);
         return "redirect:/generateresume";
@@ -174,7 +165,7 @@ public class MainController {
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
-        return "workForm";
+        return "elements/workForm";
     }
 
     //Save Work and move to Skills
@@ -184,7 +175,7 @@ public class MainController {
         Person myPerson = userComponent.getUser();
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
-            return "workForm";
+            return "elements/workForm";
         }
         Boolean outOfBounds=false;
         if(jobRepository.countByPersonAndActive(myPerson,true)>9){
@@ -215,7 +206,7 @@ public class MainController {
     public String updateEducation(@Valid Job aJob, BindingResult result){
         //Person myPerson=userComponent.getUser();
         if(result.hasErrors()){
-            return "workForm";
+            return "elements/workForm";
         }
         //personRepository.findOne(myPerson.getId()).addJob(aJob);
         jobRepository.save(aJob);
@@ -236,7 +227,7 @@ public class MainController {
             outOfBounds=true;
         }
         toSend.addAttribute("outOfBounds",outOfBounds);
-        return "skillForm";
+        return "elements/skillForm";
     }
 
     //Save skill and move to generate resume
@@ -246,7 +237,7 @@ public class MainController {
         Person myPerson=userComponent.getUser();
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
-            return "skillForm";
+            return "elements/skillForm";
         }
         Boolean outOfBounds=false;
         if(skillRepository.countByPersonAndActive(myPerson,true)>19){
@@ -276,7 +267,7 @@ public class MainController {
     public String updateEducation(@Valid Skill aSkill, BindingResult result){
         System.out.println(aSkill.toString());
         if(result.hasErrors()){
-            return "skillForm";
+            return "elements/skillForm";
         }
         skillRepository.save(aSkill);
         return "redirect:/generateresume";
@@ -363,20 +354,20 @@ public class MainController {
         switch(type){
             case "education":
                 toSend.addAttribute("anEducation" ,educationRepository.findOne(id));
-                output= "educationForm";
+                output= "elements/educationForm";
                 break;
 
             case "work":
                 toSend.addAttribute("aJob",jobRepository.findOne(id));
-                output= "workForm";
+                output= "elements/workForm";
                 break;
             case "skill":
                 toSend.addAttribute("aSkill",skillRepository.findOne(id));
-                output= "skillForm";
+                output= "elements/skillForm";
                 break;
             case "person":
                 toSend.addAttribute("newPerson",personRepository.findOne(id));
-                output="formPerson";
+                output="elements/formPerson";
                 break;
             case "course":
                 Course aCourse=courseRepository.findOne(id);
@@ -386,7 +377,7 @@ public class MainController {
                 toSend.addAttribute("courseStartHour",hour);
                 toSend.addAttribute("courseStartMin",min);
                 toSend.addAttribute("aCourse",aCourse);
-                output="formCourse";
+                output="course/formCourse";
                 break;
         }
         return output;
@@ -423,7 +414,24 @@ public class MainController {
         return "redirect:/generateresume";
     }
 
+    public void addDefaults(){
+        Role role1 = new Role();
+        role1.setId(1);
+        role1.setRole("ADMIN");
 
+        Role role2 = new Role();
+        role2.setId(2);
+        role2.setRole("SEEKER");
+
+        Role role3 = new Role();
+        role3.setId(3);
+        role3.setRole("RECRUITER");
+
+        roleRepository.save(role1);
+        roleRepository.save(role2);
+        roleRepository.save(role3);
+
+    }
 
 
 }
