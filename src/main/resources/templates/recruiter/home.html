@@ -28,6 +28,7 @@
                                             <th>High End Salary:</th>
                                             <th>Discription:</th>
                                             <th>Position Open:</th>
+                                            <th>Required Skills:</th>
                                             <th>Actions:</th>
                                         </tr>
                                         <tr th:each="p:${listMyPostedJobs}">
@@ -37,6 +38,9 @@
                                             <td th:text="*{p.lowSalary}"></td>
                                             <td th:text="*{p.highSalary}"></td>
                                             <td th:text="*{p.description}"></td>
+                                            <td>
+                                                <a th:href="@{/recruiter/addskill/{id} (id=*{p.id})}">Add Skills</a>
+                                            </td>
                                             <td th:text="*{p.enabled}"></td>
                                             <td>
                                                 <p>
@@ -44,7 +48,7 @@
                                                     -
                                                     <a th:href="@{/recruiter/update/{id} (id=*{p.id})}">Update</a>
                                                     -
-                                                    archive?
+                                                    <a th:href="@{/recruiter/postedjob/{id} (id=*{p.id})}">Job Page</a>
                                                 </p>
                                             </td>
                                         </tr>

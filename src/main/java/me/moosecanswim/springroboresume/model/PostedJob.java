@@ -82,6 +82,10 @@ public class PostedJob {
         this.requiredSkills = requiredSkills;
     }
 
+    public void addSkill(Skill aSkill){
+        this.requiredSkills.add(aSkill);
+    }
+
     public Boolean getEnabled() {
         return enabled;
     }

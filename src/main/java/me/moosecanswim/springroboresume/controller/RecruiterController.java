@@ -1,9 +1,8 @@
 package me.moosecanswim.springroboresume.controller;
 
-import me.moosecanswim.springroboresume.model.Person;
-import me.moosecanswim.springroboresume.model.PostedJob;
-import me.moosecanswim.springroboresume.model.UserComponent;
+import me.moosecanswim.springroboresume.model.*;
 import me.moosecanswim.springroboresume.repositories.PersonRepository;
+import me.moosecanswim.springroboresume.repositories.SkillRepository;
 import me.moosecanswim.springroboresume.service.PostedJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +24,10 @@ public class RecruiterController {
     PostedJobService postedJobService;
     @Autowired
     PersonRepository personRepository;
+    @Autowired
+    PostedJobSession postedJobSession;
+    @Autowired
+    SkillRepository skillRepository;
 
     @GetMapping("/home")
     public String recruiterHome(Model toSend){
@@ -66,5 +69,37 @@ public class RecruiterController {
         postedJobService.toggleStatus(id);
         return "redirect:/recruiter/home";
     }
+
+    @RequestMapping("/postedjob/{id}")
+    public String postedJobPage(@PathVariable("id") long id, Model toSend){
+        PostedJob aPJ=postedJobService.findById(id);
+        postedJobSession.setaPJ(aPJ);
+        toSend.addAttribute("aPJ",aPJ);
+        toSend.addAttribute(("listSkills"),skillRepository.findByPostedJob(aPJ));
+        return "/recruiter/postedJobPage";
+    }
+
+
+    @GetMapping("/addskill")
+    public String addSkill( Model toSend){
+        //send to form to add skills to postedjob
+        toSend.addAttribute("aSkill", new Skill());
+
+        return "recruiter/skillForm";
+    }
+    @PostMapping("/addskill")
+    public String processSkill(@Valid Skill aSkill,BindingResult result){
+        PostedJob aPJ = postedJobSession.getaPJ();
+        if(result.hasErrors()){
+            return "/recruiter/skillForm";
+        }
+       aPJ.addSkill(aSkill);
+        //hopefully this redirect works
+        return "redirect:/postedJobPage/"+aPJ.getId();
+    }
+
+
+    ///////////////////////temp stuff
+
 
 }

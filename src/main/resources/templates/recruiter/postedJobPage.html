@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Posted Job Page</title>
+    <th:block th:replace="base::header2"></th:block>
+</head>
+<body>
+<th:block th:replace="base::navigation2"></th:block>
+    <div id="wrapper">
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="container">
+                            <h1>Posted Job page</h1>
+                            <p th:text="${aPJ.id}"></p>
+                            <p th:text="${aPJ.recruiter}"></p>
+                            <p th:text="${aPJ.title}"></p>
+                            <p th:text="${aPJ.employer}"></p>
+                            <p th:text="${aPJ.lowSalary}"></p>
+                            <p th:text="${aPJ.highSalary}"></p>
+                            <p th:text="${aPJ.description}"></p>
+                            <p th:text="${aPJ.enabled}"></p>
+
+                            <a href="/recruiter/addskill"></a>
+
+                            <div class="panel panel-default">
+                                <div class="panel-header"><h3>Required Skills</h3></div>
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Skill</th>
+                                            <th>Rating</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        <tr th:each="s:${listSkills}">
+                                            <td th:text="*{s.id}"></td>
+                                            <td th:text="*{s.skill}"></td>
+                                            <td th:text="*{s.rating}"></td>
+                                            <td>Actions- update- remove</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<th:block th:replace="base::footer2"></th:block>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Recruiter: Add Skill</title>
+    <th:block th:replace="base::header2"></th:block>
+</head>
+<body>
+<th:block th:replace="base::navigation2"></th:block>
+<div id="wrapper">
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="container" boarder="1px">
+                        <!--this is where to enter stuff-->
+                        <form class="well form-horizontal"
+                              action="#"
+                              th:action="@{/recruiter/addskill}"
+                              th:object="${aSkill}"
+                              method="post">
+                            <fieldset>
+                                <legend>Posted Job: Add Skill </legend>
+
+                                <!--hidden-->
+                                <input type="hidden" th:field="*{id}">
+                                <input type="hidden" th:field="*{postedJob}">
+                                <input type="hidden" th:field="*{active}">
+
+                                <!--skill-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Skill</label>
+                                    <div class="col-md-4 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input th:type="text" th:field="*{skillName}"/> <br />
+                                            <span th:if="${#fields.hasErrors('skillName')}"
+                                                  th:errors="*{skillName}"></span><br />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Rating-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Rating</label>
+                                    <div class="col-md-4 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input th:type="text" th:field="*{rating}"/><br />
+                                            <span th:if="${#fields.hasErrors('rating')}"
+                                                  th:errors="*{rating}"></span><br />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--buttons-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"></label>
+                                    <div class="col-md-4">
+                                        <button type="submit"
+                                                class="btn btn-primary"
+                                                name="button"
+                                                value="Save">
+                                            <div>Add</div>
+                                        </button>
+                                        <!--Working on "add another button- does not work--><!--Issue is probably from having two actions!-->
+                                        <div>
+                                            <button type="submit"
+                                                    class="btn btn-primary"
+                                                    name="button"
+                                                    value="AddAnother">
+                                                <div>Add Another</div>
+                                            </button>
+                                        </div>
+
+                                        <button id="resetButton"
+                                                type="reset"
+                                                class="btn btn-primary">
+                                            <div>Clear</div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="base::footer2"></th:block>
+</body>
+</html>
