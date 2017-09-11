@@ -33,6 +33,7 @@ public class MainController {
 
     @RequestMapping("/login")
     public String login(){
+        //make sure to assign the userComponent here
         return "login";
     }
 
@@ -419,7 +420,7 @@ public class MainController {
         Person tempUser = personRepository.findByUsername(userComponent.getUser().getUsername());
         tempUser.addRole(roleRepository.findByRole("SEEKER"));
         personRepository.save(tempUser);
-        return "redirect:/generateresume";
+        return "redirect:/seeker/home";
     }
     @RequestMapping("/assignRecruiter")
     public String assignRecruiter(){

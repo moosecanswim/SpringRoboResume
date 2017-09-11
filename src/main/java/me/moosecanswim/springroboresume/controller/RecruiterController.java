@@ -80,18 +80,18 @@ public class RecruiterController {
     }
 
 
-    @GetMapping("/addskill")
+    @GetMapping("postedjob/addskillpj")
     public String addSkill( Model toSend){
         //send to form to add skills to postedjob
         toSend.addAttribute("aSkill", new Skill());
 
-        return "recruiter/skillForm";
+        return "recruiter/skillFormPJ";
     }
-    @PostMapping("/addskill")
+    @PostMapping("postedjob/addskillpj")
     public String processSkill(@Valid Skill aSkill,BindingResult result){
         PostedJob aPJ = postedJobSession.getaPJ();
         if(result.hasErrors()){
-            return "/recruiter/skillForm";
+            return "/recruiter/skillFormPJ";
         }
        aPJ.addSkill(aSkill);
         //hopefully this redirect works
@@ -99,7 +99,6 @@ public class RecruiterController {
     }
 
 
-    ///////////////////////temp stuff
 
 
 }

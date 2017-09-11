@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Seeker Home</title>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <title th:inline="text"> [[${myPerson.firstName}]]'s New Resume</title>
+        <th:block th:replace="base::header2"></th:block>
+
+        <!--My additional bootstrap-->
+        <link rel="stylesheet" href="css/additionalcss.css"/>
+
+    </head>
+    <body>
+        <th:block th:replace="base::navigation2"></th:block>
+
+        <div id="wrapper">
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="container">
+                                <div class="center">
+                                    <h1 th:inline="text">Welcome [[${myPerson.firstName}]] [[${myPerson.lastName}]]</h1>
+                                    <h2 th:inline="text">[[${myPerson.email}]]</h2>
+                                    <p><a th:href="@{/update/person/{id} (id=${myPerson.id})}">Update contact info</a></p>
+                                    <p>Find jobs and view your resume</p>
+                                    <h3><a href="/generateresume">Generate/Work on my Resume</a></h3>
+                                </div>
+
+                                <!--this will create a notification table with all the applicable jobs (with your required skills)-->
+                                <div th:class="${hideNotification}? 'panel panel-danger':'panel panel-success'">
+                                    <div class="panel-header"><h3>Posted Jobs that match your skills</h3></div>
+                                    <div class="panel-body">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Title:</th>
+                                                <th>Employer:</th>
+                                                <th>Low End Salary:</th>
+                                                <th>High End Salary:</th>
+                                                <th>Discription:</th>
+                                                <th>Required Skills:</th>
+                                            </tr>
+                                            <tr th:each="p:${postedJobsBySkill}">
+                                                <td th:text="*{p.id}"></td>
+                                                <td th:text="*{p.title}"></td>
+                                                <td th:text="*{p.employer}"></td>
+                                                <td th:text="*{p.lowSalary}"></td>
+                                                <td th:text="*{p.highSalary}"></td>
+                                                <td th:text="*{p.description}"></td>
+                                                <td>
+                                                    skills
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                                <div class="panel panel-default">
+                                    <div class="panel-header"><h3>List of All Posted Jobs</h3></div>
+                                    <div class="panel-body">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Title:</th>
+                                                <th>Employer:</th>
+                                                <th>Low End Salary:</th>
+                                                <th>High End Salary:</th>
+                                                <th>Discription:</th>
+                                                <th>Required Skills:</th>
+                                            </tr>
+                                            <tr th:each="p:${allPostedJobs}">
+                                                <td th:text="*{p.id}"></td>
+                                                <td th:text="*{p.title}"></td>
+                                                <td th:text="*{p.employer}"></td>
+                                                <td th:text="*{p.lowSalary}"></td>
+                                                <td th:text="*{p.highSalary}"></td>
+                                                <td th:text="*{p.description}"></td>
+                                                <td>
+                                                    skills
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <th:block th:replace="base::footer2"></th:block>
+    </body>
+    </html>
+</body>
+</html>

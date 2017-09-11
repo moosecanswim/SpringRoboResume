@@ -1,15 +1,28 @@
 package me.moosecanswim.springroboresume;
 
+import me.moosecanswim.springroboresume.repositories.PersonRepository;
+import me.moosecanswim.springroboresume.service.SSPersonDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
+    SSPersonDetailsService personDetailService;
+    @Autowired
+    PersonRepository personRepository;
+    @Override
+    public UserDetailsService userDetailsServiceBean()throws Exception{
+        return new SSPersonDetailsService(personRepository);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
@@ -19,6 +32,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/")
 //                .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
+                .anyRequest().authenticated()
+                .antMatchers("/recruiter").access("hasRole('ROLE_RECRUITER')")
+                .anyRequest().authenticated()
+                .antMatchers("/seeker").access("hasRole('ROLE_SEEKER')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
@@ -33,17 +50,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 
         auth.inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER")
+                .withUser("user").password("password").roles("USER","SEEKER","RECRUITER")
                 .and()
                 .withUser("dave").password("begreat").roles("ADMIN")
                 .and()
                 .withUser("newuser").password("newuserpa$$").roles("USER");
 
-        /***
-         * to add additional accounts, remove the semicolon at the
-         * end of the precious command and add additional user like below:
-         *          .and()
-         *          .withUser("dave").password("begreat").roles("USER");
-         */
+        auth.userDetailsService(userDetailsServiceBean());
     }
 }

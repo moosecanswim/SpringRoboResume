@@ -2,12 +2,14 @@ package me.moosecanswim.springroboresume.service;
 
 import me.moosecanswim.springroboresume.model.Person;
 import me.moosecanswim.springroboresume.model.PostedJob;
+import me.moosecanswim.springroboresume.model.Skill;
 import me.moosecanswim.springroboresume.model.UserComponent;
 import me.moosecanswim.springroboresume.repositories.PersonRepository;
 import me.moosecanswim.springroboresume.repositories.PostedJobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -31,12 +33,35 @@ public class PostedJobService {
         Person tempPerson = personRepository.findById(aPerson.getId());
         return postedJobRepository.countByRecruiter(tempPerson);
     }
+    public Iterable<PostedJob> findAll(){
+        return postedJobRepository.findAll();
+    }
     public PostedJob findById(long id){
         PostedJob aPJ = postedJobRepository.findOne(id);
         if(aPJ == null){
             System.out.println("findByID: posted job not found");
         }
         return aPJ;
+    }
+    public Set<PostedJob> findBySkills(Set<Skill> skills){
+        Set<PostedJob> tempSet=new HashSet<PostedJob>();
+        if(skills.size()<1){
+            System.out.println("PJS:findBysSkils: there are no input skills");
+            tempSet=null;//empty
+        }
+        else {
+            for (Skill s : skills) {
+
+                if (postedJobRepository.findByRequiredSkills(s) == null) {
+                    System.out.println("PJS: findbyskills: skill not found");
+                }
+                else {
+                    tempSet.addAll(postedJobRepository.findByRequiredSkills(s));
+                }
+            }
+
+        }
+        return tempSet;
     }
     public void updateJob(PostedJob aPJ){
         PostedJob ePJ = postedJobRepository.findOne(aPJ.getId());

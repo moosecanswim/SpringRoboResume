@@ -4,8 +4,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,7 +42,7 @@ public class Person {
     public Person(){
         active=true;
         this.courses=new HashSet<Course>();
-        this.roles=new HashSet<Role>();
+        this.setRoles(new HashSet<Role>());
     }
 
 
@@ -129,11 +127,11 @@ public class Person {
 
     public void addRole(Role r){
         System.out.println("Adding role: " + r.getRole());
-        this.roles.add(r);
+        this.getRoles().add(r);
     }
     public void removeRole(Role r){
         System.out.println("Removing role: " + r.getRole());
-        this.roles.remove(r);
+        this.getRoles().remove(r);
     }
 
 
@@ -162,5 +160,13 @@ public class Person {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
