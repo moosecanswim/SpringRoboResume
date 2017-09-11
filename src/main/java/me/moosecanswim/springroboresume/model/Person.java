@@ -14,6 +14,11 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private long id;
+    @Column(unique=true)
+    @NotBlank
+    private String username;
+    @NotBlank
+    private String password;
     @NotBlank
     private String firstName;
     @NotBlank
@@ -141,5 +146,21 @@ public class Person {
     }
     public void addPostedJob(PostedJob postedJob){
         this.postedJobs.add(postedJob);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

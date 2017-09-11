@@ -12,20 +12,61 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Recruiter Home</h1>
+                        <div class="container">
+                            <h1>Recruiter Home</h1>
 
-                        <h3>Show a list of posted by this recruiter jobs here</h3>
-                        <h4>button to show all posted jobs</h4>
+                            <h3>List of posted by this recruiter jobs here</h3>
+                            <div class="panel panel-default">
+                                <div class="panel-header"><h3>List of Users</h3></div>
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Title:</th>
+                                            <th>Employer:</th>
+                                            <th>Low End Salary:</th>
+                                            <th>High End Salary:</th>
+                                            <th>Discription:</th>
+                                            <th>Position Open:</th>
+                                            <th>Actions:</th>
+                                        </tr>
+                                        <tr th:each="p:${listMyPostedJobs}">
+                                            <td th:text="*{p.id}"></td>
+                                            <td th:text="*{p.title}"></td>
+                                            <td th:text="*{p.employer}"></td>
+                                            <td th:text="*{p.lowSalary}"></td>
+                                            <td th:text="*{p.highSalary}"></td>
+                                            <td th:text="*{p.description}"></td>
+                                            <td th:text="*{p.enabled}"></td>
+                                            <td>
+                                                <p>
+                                                    <a th:href="@{/recruiter/toggleStatus/{id} (id=*{p.id})}">Enabld/Disable</a>
+                                                    -
+                                                    <a th:href="@{/recruiter/update/{id} (id=*{p.id})}">Update</a>
+                                                    -
+                                                    archive?
+                                                </p>
+                                            </td>
+                                        </tr>
 
-                        <form action="/recruiter/addjob">
-                            <!--buttons-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label"></label>
-                                <div class="col-md-4">
-                                    <button id="submitButton" type="submit" class="btn btn-primary">Add Job<span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                    </table>
+                                </div>
+                                <div class="panel-footer">
+                                    <form action="/recruiter/addjob">
+                                        <!--buttons-->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label"></label>
+                                            <div class="col-md-4">
+                                                <button id="submitButton" type="submit" class="btn btn-primary">Add Job<span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        </form>
+
+
+                        </div>
+
                     </div>
                 </div>
             </div>

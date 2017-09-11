@@ -44,17 +44,18 @@ public class MainController {
             addDefaults();
         }
         toSend.addAttribute("listOfPeople", personRepository.findAll());
-        return "index";
+//        return "index";
+        return "welcome";
     }
 
-    @GetMapping("/newPerson")
+    @GetMapping("/register")
     public String newUser(Model toSend){
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("newPerson", new Person());
         toSend.addAttribute("listOfPeople", personRepository.findAll());
         return "elements/formPerson";
     }
-    @PostMapping("/newPerson")
+    @PostMapping("/register")
     public String newUser2(@Valid @ModelAttribute("newPerson") Person newPerson,
                            Model toSend,BindingResult result){
 
@@ -412,6 +413,21 @@ public class MainController {
                 break;
         }
         return "redirect:/generateresume";
+    }
+    @RequestMapping("/assignSeeker")
+    public String assignSeeker(){
+        Person tempUser = personRepository.findByUsername(userComponent.getUser().getUsername());
+        tempUser.addRole(roleRepository.findByRole("SEEKER"));
+        personRepository.save(tempUser);
+        return "redirect:/generateresume";
+    }
+    @RequestMapping("/assignRecruiter")
+    public String assignRecruiter(){
+        //assign the user to be a recruiter
+        Person tempUser = personRepository.findByUsername(userComponent.getUser().getUsername());
+        tempUser.addRole(roleRepository.findByRole("RECRUITER"));
+        personRepository.save(tempUser);
+        return "redirect:/recruiter/home";
     }
 
     public void addDefaults(){

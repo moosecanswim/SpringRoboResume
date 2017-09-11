@@ -23,7 +23,7 @@
 
                             <form class="well form-horizontal"
                                   action="#"
-                                  th:action="${isNew}? @{/newPerson}: @{/updatePerson}"
+                                  th:action="${isNew}? @{/register}: @{/updatePerson}"
                                   th:object="${newPerson}"
                                   method="post">
                                 <fieldset>
@@ -53,8 +53,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <!--email-->
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Email</label>
@@ -63,6 +61,29 @@
                                                 <Input type="text" th:field="*{email}"/>
                                                 <span th:if="${#fields.hasErrors('email')}"
                                                       th:errors="*{email}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--username-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Username</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <Input type="text" th:field="*{username}"/>
+                                                <span th:if="${#fields.hasErrors('username')}"
+                                                      th:errors="*{username}"></span><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--password-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Password</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <Input type="password" th:field="*{password}"/>
+                                                <span th:if="${#fields.hasErrors('password')}"
+                                                      th:errors="*{password}"></span><br />
                                             </div>
                                         </div>
                                     </div>
