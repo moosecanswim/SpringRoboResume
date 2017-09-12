@@ -78,12 +78,27 @@
 
                                     <!--Graduation Date input-->
                                     <div class="form-group">
-                                        <label class="col-md-4 control-label">Graduation Date: </label>
+                                        <label class="col-md-4 control-label">Graduation Date (mm/dd/yyyy): </label>
                                         <div class="col-md-4 inputGroupContainer">
                                             <div class="input-group">
-                                                <Input type="text" th:field="*{graduationDate}"/><br />
                                                 <span th:if="${#fields.hasErrors('graduationDate')}"
                                                       th:errors="*{graduationDate}"></span><br />
+                                                <!--<Input type="text" th:field="*{graduationDate}"/><br />-->
+                                                <input name="comment3" id="comment3" type="text" th:field="*{graduationDate}" size="20" maxlength="10" onBlur="datevalidate('comment3');"/>
+                                                <button type="reset" id="f_trigger_b">Cal</button>
+                                                <br />
+                                                <script type="text/javascript">
+                                                    Calendar.setup({
+                                                        inputField     :    "comment3",
+                                                        ifFormat       :    "%m/%d/%Y",
+                                                        showsTime      :    false,
+                                                        button         :    "f_trigger_b",
+                                                        weekNumbers    :    false,
+                                                        range          :    [2010, 2025],
+                                                        singleClick    :    true,
+                                                        step           :    1
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -126,8 +141,9 @@
         </div>
     </div>
 
-
+    <!--<script language="JavaScript" src="js/common_functions.js"></script>-->
     <th:block th:replace="base::footer2"></th:block>
+
 </body>
 
 </html>

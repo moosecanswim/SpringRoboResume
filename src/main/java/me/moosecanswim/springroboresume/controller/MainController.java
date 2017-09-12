@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +41,17 @@ public class MainController {
 
     //Welcome Home
     @GetMapping("/")
-    public String index(Model toSend){
+    public String index(Model toSend,Principal p){
         if(roleRepository.count()<1){
             addDefaults();
         }
+        if(p!=null){
+            userComponent.setUser(personRepository.findByUsername(p.getName()));
+            String uname = userComponent.getUser().getUsername();
+            System.out.println(uname);
+            toSend.addAttribute("username",uname);
+        }
+
         toSend.addAttribute("listOfPeople", personRepository.findAll());
 //        return "index";
         return "welcome";
