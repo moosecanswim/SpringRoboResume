@@ -3,6 +3,7 @@ package me.moosecanswim.springroboresume.controller;
 import me.moosecanswim.springroboresume.model.*;
 import me.moosecanswim.springroboresume.repositories.PersonRepository;
 import me.moosecanswim.springroboresume.repositories.SkillRepository;
+import me.moosecanswim.springroboresume.service.PersonService;
 import me.moosecanswim.springroboresume.service.PostedJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/recruiter")
@@ -28,10 +30,12 @@ public class RecruiterController {
     PostedJobSession postedJobSession;
     @Autowired
     SkillRepository skillRepository;
+    @Autowired
+    PersonService personService;
 
     @GetMapping("/home")
-    public String recruiterHome(Model toSend){
-        Person aRecruiter = personRepository.findById(userComponent.getUser().getId());
+    public String recruiterHome(Principal p, Model toSend){
+        Person aRecruiter = personService.findPersonByUsername(p.getName());
         toSend.addAttribute("countMyPostedJobs",postedJobService.countByRecruiter(aRecruiter));
         toSend.addAttribute("listMyPostedJobs",postedJobService.showByRecruiter(aRecruiter));
         return "recruiter/home";

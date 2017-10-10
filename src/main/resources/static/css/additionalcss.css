@@ -50,7 +50,7 @@
     display:inline;
 }
 body{
-    background-color:darkorange;
+    background-color:darkcyan;
 }
 .center {
     text-align: center;
@@ -69,4 +69,16 @@ body{
 
 .panel-transparent .panel-body{
     background: rgba(46, 51, 56, 0.2)!important;
+}
+.jumbotron {
+    margin-bottom: 0px;
+    background-image: url(https://static.pexels.com/photos/311012/pexels-photo-311012.jpeg);
+    background-position: 0% 25%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    text-shadow: black 0.3em 0.3em 0.3em;
+}
+a{
+    color:darkblue;
 }

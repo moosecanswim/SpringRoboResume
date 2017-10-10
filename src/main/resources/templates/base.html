@@ -86,9 +86,17 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="/">
-                        Start
+                        Robo Resume
                     </a>
                 </li>
+                <li>
+                    <a href="/seeker/home">Job Seeker Home</a>
+                </li>
+                <li>
+                    <a href="/generateresume">Generate Resume</a>
+                </li>
+                <br />
+                <br />
                 <li>
                     <a href="/addeducation">Add Education</a>
                 </li>
@@ -98,20 +106,44 @@
                 <li>
                     <a href="/addskill">Add Skills</a>
                 </li>
+
                 <li>
-                    <a href="/generateresume">Generate Resume</a>
+                    <a href="/logout">Log Out</a>
                 </li>
-                <li>
-                    <a href="/course/add">Add Course</a>
-                </li>
-                <li>
-                    <a href="/course/showall">Avalible Courses</a>
-                </li>
-                <li>
-                    <a href="/seeker/home">Seeker Home</a>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    </div>
+    <div th:fragment="nav-recruiter">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/">
+                        Robo Resume
+                    </a>
                 </li>
                 <li>
                     <a href="/recruiter/home">Recruiter Home</a>
+                </li>
+                <li>
+                    <a href="/recruiter/addjob">Add Job</a>
+                </li>
+                <li>
+                    <a href="/logout">Log Out</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    </div>
+    <div th:fragment="nav-login">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/">
+                        Robo Resume
+                    </a>
                 </li>
                 <li>
                     <a href="/logout">Log Out</a>
@@ -122,11 +154,10 @@
     </div>
 
 
-
     <div th:fragment="footer">
         <nav class="navbar navbar-default navbar-fixed-bottom">
             <div class="container">
-                <p> Footer 1 - Copyright moosecanswim 2017</p>
+                <p> Copyright Kyle G 2017</p>
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
             </div>
         </nav>
@@ -157,18 +188,6 @@
         </script>
     </div>
 
-    <!--<div id="wrapper">-->
-        <!--<div id="page-content-wrapper">-->
-            <!--<div class="container-fluid">-->
-                <!--<div class="row">-->
-                    <!--<div class="col-lg-12">-->
-                        <!--&lt;!&ndash;Enter page content here &ndash;&gt;-->
-
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
 
 
 </body>

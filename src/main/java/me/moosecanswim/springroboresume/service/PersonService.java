@@ -2,6 +2,7 @@ package me.moosecanswim.springroboresume.service;
 
 
 import me.moosecanswim.springroboresume.model.Person;
+import me.moosecanswim.springroboresume.model.Role;
 import me.moosecanswim.springroboresume.repositories.PersonRepository;
 import me.moosecanswim.springroboresume.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,32 @@ public class PersonService {
         System.out.println("updated user ("+existingUser.getId()+" ) "+existingUser.getUsername());
         personRepository.save(existingUser);
     }
+    public Person findPersonByUsername(String username){
+        Person output=null;
+        Person exPerson=personRepository.findByUsername(username);
+        if(exPerson != null){
+            output = exPerson;
+        }else{
+            throw new RuntimeException("the person does not exist");
+        }
+        return output;
+    }
 
+    //check to see if a person has a role
+    public Boolean personHasRole(Person aPerson, String aRoleName){
+        Boolean output = false;
+
+        Person ePerson = personRepository.findOne(aPerson.getId());
+        if(ePerson == null){
+            throw new RuntimeException("person does not exist in person repository");
+        }
+        Role eRole = roleRepository.findByRole(aRoleName);
+        if(eRole == null){
+            throw new RuntimeException("Role " + aRoleName + "does not exist in role repository");
+        }
+        if(ePerson.getRoles().contains(eRole)){
+            output = true;
+        }
+        return output;
+    }
 }

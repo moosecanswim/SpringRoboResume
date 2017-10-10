@@ -2,6 +2,7 @@ package me.moosecanswim.springroboresume.controller;
 
 import me.moosecanswim.springroboresume.model.*;
 import me.moosecanswim.springroboresume.repositories.*;
+import me.moosecanswim.springroboresume.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,8 @@ public class MainController {
     @Autowired
     PersonRepository personRepository;
     @Autowired
+    PersonService personService;
+    @Autowired
     EducationRepository educationRepository;
     @Autowired
     JobRepository jobRepository;
@@ -29,8 +32,8 @@ public class MainController {
     CourseRepository courseRepository;
     @Autowired
     RoleRepository roleRepository;
-    @Autowired
-    UserComponent userComponent;
+//    @Autowired
+//    UserComponent userComponent;
 
     @RequestMapping("/login")
     public String login(){
@@ -45,16 +48,35 @@ public class MainController {
         if(roleRepository.count()<1){
             addDefaults();
         }
-        if(p!=null){
-            userComponent.setUser(personRepository.findByUsername(p.getName()));
-            String uname = userComponent.getUser().getUsername();
-            System.out.println(uname);
-            toSend.addAttribute("username",uname);
-        }
+//        if(p!=null){
+//            userComponent.setUser(personRepository.findByUsername(p.getName()));
+//            String uname = userComponent.getUser().getUsername();
+//            System.out.println(uname);
+//            toSend.addAttribute("username",uname);
+//        }
 
         toSend.addAttribute("listOfPeople", personRepository.findAll());
 //        return "index";
         return "welcome";
+    }
+    @RequestMapping("/processlogin")
+    public String processLogin(Principal p){
+        //could have an issue wh`en passing the roles in a string or if someone is assigned both roles
+        System.out.println("the principal is " +p.getName());
+        Person tempP = personService.findPersonByUsername(p.getName());
+        System.out.println(String.format("the principal %s has (%d) roles",tempP.getUsername(),tempP.getRoles().size()));
+        if(personService.personHasRole(tempP,"RECRUITER")){
+            //send them to the admin home
+            System.out.println("Going to Recruiter home");
+            return "redirect:/recruiter/home";
+        }
+        else if(personService.personHasRole(tempP,"SEEKER")){
+            //send them to teacher home
+            System.out.println("Going to Seeker home");
+            return "redirect:/generateresume";
+        }
+        System.out.println("Error, going home home");
+        return "redirect:/";
     }
 
     @GetMapping("/register")
@@ -71,31 +93,31 @@ public class MainController {
         if(result.hasErrors()){
             return"elements/formPerson";
         }
-        userComponent.setUser(newPerson);
+        //userComponent.setUser(newPerson);
         personRepository.save(newPerson);
         return"elements/startresume";
     }
 
     @RequestMapping("/updatePerson")
-    public String updatePerson(@Valid Person aPerson,BindingResult result){
+    public String updatePerson(@Valid Person newPerson,BindingResult result){
         if(result.hasErrors()){
             return "elements/formPerson";
         }
-        personRepository.save(aPerson);
+        personRepository.save(newPerson);
         return"redirect:/generateresume";
     }
 
     @RequestMapping("/selectUser/{id}")
     public String selectOldUser(@PathVariable("id") long oldUserId){
         System.out.println("User id is: " + oldUserId);
-        userComponent.setUser(personRepository.findOne(oldUserId));
+        //userComponent.setUser(personRepository.findOne(oldUserId));
         return "redirect:/generateresume";
     }
 
     //Education
     @GetMapping("/addeducation")
-    public String addEducation(Model toSend){
-        Person myPerson = userComponent.getUser();
+    public String addEducation(Model toSend, Principal p){
+        Person myPerson = personService.findPersonByUsername(p.getName());
         System.out.println("Current user is " + myPerson.toString());
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("anEducation", new Education());
@@ -117,10 +139,10 @@ public class MainController {
     //takes in the button perameter (value) and chooses to add or add another based on it
     @RequestMapping(value="/addeducation", method=POST)
     public String addOneEducation(@Valid @ModelAttribute("anEducation") Education anEducation,
-                                  Model toSend, BindingResult result,@RequestParam(value="button") String todo){
+                                  Model toSend, BindingResult result,@RequestParam(value="button") String todo, Principal p){
         //refers to the acceptEducation method that will check to make sure the input counts (in the education class)
         //forces user to enter atleast one education (wont take a blank entry)
-        Person myPerson=userComponent.getUser();
+        Person myPerson=personService.findPersonByUsername(p.getName());
         toSend.addAttribute("isNew",false);
         if(!anEducation.acceptEducation()){
             return "redirect:/addeducation";
@@ -164,8 +186,8 @@ public class MainController {
 
     //Work
     @GetMapping("/addwork")
-    public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson){
-        Person myPerson=userComponent.getUser();
+    public String addwork(Model toSend,@ModelAttribute("newPerson") Person newPerson, Principal p){
+        Person myPerson=personService.findPersonByUsername(p.getName());
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("aJob", new Job());
         toSend.addAttribute("jobCount",(jobRepository.countByPersonAndActive(myPerson,true)+1));
@@ -181,8 +203,8 @@ public class MainController {
     //Save Work and move to Skills
     @RequestMapping(value="/addwork", method=POST)
     public String addOneWork(@Valid @ModelAttribute("aJob") Job aJob,
-                             Model toSend, BindingResult result,@RequestParam(value="button") String todo){
-        Person myPerson = userComponent.getUser();
+                             Model toSend, BindingResult result,@RequestParam(value="button") String todo, Principal p){
+        Person myPerson = personService.findPersonByUsername(p.getName());
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "elements/workForm";
@@ -213,8 +235,8 @@ public class MainController {
     }
 
     @RequestMapping("/updateWork")
-    public String updateEducation(@Valid Job aJob, BindingResult result){
-        //Person myPerson=userComponent.getUser();
+    public String updateEducation(@Valid Job aJob, BindingResult result, Principal p){
+        //Person myPerson=personService.findPersonByUsername(p.getName());
         if(result.hasErrors()){
             return "elements/workForm";
         }
@@ -226,8 +248,8 @@ public class MainController {
 
     //Skills
     @GetMapping("/addskill")
-    public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson){
-        Person myPerson=userComponent.getUser();
+    public String addskill(Model toSend,@ModelAttribute("newPerson") Person newPerson, Principal p){
+        Person myPerson=personService.findPersonByUsername(p.getName());
         toSend.addAttribute("isNew",true);
         toSend.addAttribute("aSkill", new Skill());
 
@@ -243,8 +265,8 @@ public class MainController {
     //Save skill and move to generate resume
     @RequestMapping(value="/addskill", method=POST)
     public String addOneSkill(@Valid @ModelAttribute("aSkill") Skill aSkill,
-                              Model toSend, BindingResult result,@RequestParam(value="button") String todo){
-        Person myPerson=userComponent.getUser();
+                              Model toSend, BindingResult result,@RequestParam(value="button") String todo, Principal p){
+        Person myPerson=personService.findPersonByUsername(p.getName());
         toSend.addAttribute("isNew",false);
         if(result.hasErrors()){
             return "elements/skillForm";
@@ -289,9 +311,9 @@ public class MainController {
 
     //Generate Resume
     @GetMapping("/generateresume")
-    public String generateResume(Model toSend, @ModelAttribute("newPerson") Person newPerson){
+    public String generateResume(Principal p,Model toSend, @ModelAttribute("newPerson") Person newPerson){
 
-        Person myPeep = userComponent.getUser();
+        Person myPeep = personService.findPersonByUsername(p.getName());
         toSend.addAttribute("myPerson",myPeep);//for the name entry
 
 
@@ -395,8 +417,8 @@ public class MainController {
     }
     //actually archives education work and skill traits and removes it from the person's set
     @RequestMapping("/delete/{type}/{id}")
-    public String delete(@PathVariable("type") String type,@PathVariable("id") long id){
-        Person myPerson = userComponent.getUser();
+    public String delete(@PathVariable("type") String type,@PathVariable("id") long id,Principal p){
+        Person myPerson = personService.findPersonByUsername(p.getName());
         switch(type){
             case "education":
                 Education tempEducation=educationRepository.findOne(id);
@@ -424,16 +446,16 @@ public class MainController {
         return "redirect:/generateresume";
     }
     @RequestMapping("/assignSeeker")
-    public String assignSeeker(){
-        Person tempUser = personRepository.findByUsername(userComponent.getUser().getUsername());
+    public String assignSeeker(Principal p){
+        Person tempUser = personRepository.findByUsername(p.getName());
         tempUser.addRole(roleRepository.findByRole("SEEKER"));
         personRepository.save(tempUser);
         return "redirect:/seeker/home";
     }
     @RequestMapping("/assignRecruiter")
-    public String assignRecruiter(){
+    public String assignRecruiter(Principal p){
         //assign the user to be a recruiter
-        Person tempUser = personRepository.findByUsername(userComponent.getUser().getUsername());
+        Person tempUser = personRepository.findByUsername(p.getName());
         tempUser.addRole(roleRepository.findByRole("RECRUITER"));
         personRepository.save(tempUser);
         return "redirect:/recruiter/home";
